@@ -14,7 +14,7 @@ import lombok.Data;
 @Entity
 @Table(name = "tb_stamp")
 @Data
-public class Stamp implements Serializable {
+public class Brand implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,6 @@ public class Stamp implements Serializable {
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updateDate = Instant.now();
 
-    public Stamp() {
+    public Brand() {
     }
 }
