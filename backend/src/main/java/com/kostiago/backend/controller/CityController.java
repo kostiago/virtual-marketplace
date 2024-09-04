@@ -1,5 +1,6 @@
 package com.kostiago.backend.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,34 +13,37 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.kostiago.backend.entities.State;
-import com.kostiago.backend.services.StateService;
+import com.kostiago.backend.entities.City;
+import com.kostiago.backend.services.CityService;
 
 @RestController
-@RequestMapping("/api/state")
-public class StateController {
+@RequestMapping("/api/city")
+public class CityController {
 
     @Autowired
-    private StateService service;
+    private CityService service;
 
     @GetMapping
-    public ResponseEntity<List<State>> findAll() {
-
-        List<State> list = service.findAll();
-        return ResponseEntity.ok().body(list);
+    public ResponseEntity<List<City>> findAll() {
+        List<City> cities = service.findAll();
+        return ResponseEntity.ok().body(cities);
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<State> insert(@RequestBody State state) {
-        state = service.insert(state);
-        return ResponseEntity.ok().body(state);
+    public ResponseEntity<City> insert(@RequestBody City city) {
+
+        city = service.insert(city);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(city.getId()).toUri();
+        return ResponseEntity.created(uri).body(city);
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<State> update(@RequestBody State state) {
-        state = service.update(state);
-        return ResponseEntity.ok().body(state);
+    public ResponseEntity<City> update(@RequestBody City city) {
+        city = service.update(city);
+        return ResponseEntity.ok().body(city);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -47,5 +51,4 @@ public class StateController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 }
