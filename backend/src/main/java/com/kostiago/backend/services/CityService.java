@@ -30,7 +30,8 @@ public class CityService {
     @Transactional
     public City update(City city) {
 
-        return repository.saveAndFlush(city);
+        City updateCity = repository.saveAndFlush(city);
+        return updateCity;
 
     }
 

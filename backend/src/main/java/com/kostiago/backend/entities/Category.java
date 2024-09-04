@@ -8,19 +8,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "tb_city")
+@Table(name = "tb_category")
 @Data
-
-public class City implements Serializable {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,13 +30,6 @@ public class City implements Serializable {
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updateDate;
 
-    @ManyToOne
-    @JoinColumn(name = "idstate")
-    private State state;
-
-    public City() {
-    }
-
     @PrePersist
     protected void onCreate() {
         createDate = Instant.now();
@@ -52,4 +41,6 @@ public class City implements Serializable {
         updateDate = Instant.now();
     }
 
+    public Category() {
+    }
 }

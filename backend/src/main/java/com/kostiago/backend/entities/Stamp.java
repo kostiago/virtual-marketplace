@@ -8,19 +8,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "tb_city")
+@Table(name = "tb_stamp")
 @Data
-
-public class City implements Serializable {
+public class Stamp implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,27 +23,11 @@ public class City implements Serializable {
     private String name;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE", updatable = false)
-    private Instant createDate;
+    private Instant createDate = Instant.now();
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant updateDate;
+    private Instant updateDate = Instant.now();
 
-    @ManyToOne
-    @JoinColumn(name = "idstate")
-    private State state;
-
-    public City() {
+    public Stamp() {
     }
-
-    @PrePersist
-    protected void onCreate() {
-        createDate = Instant.now();
-        updateDate = Instant.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updateDate = Instant.now();
-    }
-
 }
