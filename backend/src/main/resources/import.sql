@@ -1,1 +1,4 @@
-INSERT INTO tb_state (name, acronym, create_date, update_date) VALUES ('Paraiba', 'PB', NULL, NULL);
+INSERT INTO tb_state (name, acronym, create_date, update_date) VALUES ('São Paulo', 'SP', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), ('Rio de Janeiro', 'RJ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),('Minas Gerais', 'MG', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- Inserindo cidades na tabela tb_city
+INSERT INTO tb_city (name, create_date, update_date, idstate) VALUES ('São Paulo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, (SELECT id FROM tb_state WHERE acronym = 'SP')), ('Rio de Janeiro', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, (SELECT id FROM tb_state WHERE acronym = 'RJ')), ('Belo Horizonte', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, (SELECT id FROM tb_state WHERE acronym = 'MG'));

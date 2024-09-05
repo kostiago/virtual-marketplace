@@ -1,5 +1,6 @@
 package com.kostiago.backend.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.kostiago.backend.dto.StateDTO;
 import com.kostiago.backend.entities.State;
 import com.kostiago.backend.services.StateService;
 
@@ -24,16 +27,25 @@ public class StateController {
     private StateService service;
 
     @GetMapping
-    public ResponseEntity<List<State>> findAll() {
+    public ResponseEntity<List<StateDTO>> findAll() {
 
-        List<State> list = service.findAll();
+        List<StateDTO> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<StateDTO> findById(@PathVariable Long id) {
+
+        StateDTO dto = service.findById(id);
+        return ResponseEntity.ok().body(dto);
+    }
+
     @PostMapping(value = "/")
-    public ResponseEntity<State> insert(@RequestBody State state) {
-        state = service.insert(state);
-        return ResponseEntity.ok().body(state);
+    public ResponseEntity<StateDTO> insert(@RequestBody StateDTO dto) {
+        dto = service.insert(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping(value = "/")
