@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kostiago.backend.dto.StateDTO;
-import com.kostiago.backend.entities.State;
+
 import com.kostiago.backend.services.StateService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/state")
@@ -41,17 +43,18 @@ public class StateController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<StateDTO> insert(@RequestBody StateDTO dto) {
+    public ResponseEntity<StateDTO> insert(@Valid @RequestBody StateDTO dto) {
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
 
-    @PutMapping(value = "/")
-    public ResponseEntity<State> update(@RequestBody State state) {
-        state = service.update(state);
-        return ResponseEntity.ok().body(state);
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<StateDTO> update(@PathVariable Long id, @RequestBody StateDTO dto) {
+
+        dto = service.update(id, dto);
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")

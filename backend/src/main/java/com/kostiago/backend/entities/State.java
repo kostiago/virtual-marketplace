@@ -10,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_state")
@@ -20,8 +22,11 @@ public class State implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     private String name;
 
+    @Size(min = 2, max = 2, message = "A sigla precisa ter exatamente 2 caracteres")
+    @NotNull
     private String acronym;
 
     @Temporal(TemporalType.TIMESTAMP)

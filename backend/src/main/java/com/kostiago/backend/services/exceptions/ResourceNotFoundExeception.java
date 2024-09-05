@@ -1,4 +1,4 @@
-package com.kostiago.backend.services.execptions;
+package com.kostiago.backend.services.exceptions;
 
 public class ResourceNotFoundExeception extends RuntimeException {
 

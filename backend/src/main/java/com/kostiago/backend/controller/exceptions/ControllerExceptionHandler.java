@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.kostiago.backend.services.execptions.ResourceNotFoundExeception;
+import com.kostiago.backend.services.exceptions.DatabaseException;
+import com.kostiago.backend.services.exceptions.InvalidAcronymException;
+import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -17,14 +19,46 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(ResourceNotFoundExeception.class)
     public ResponseEntity<StandardError> entityNotFound(ResourceNotFoundExeception e, HttpServletRequest request) {
 
+        HttpStatus status = HttpStatus.NOT_FOUND;
         StandardError error = new StandardError();
 
         error.setTimeStamp(Instant.now());
-        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setStatus(status.value());
         error.setError("Resource not found");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(InvalidAcronymException.class)
+    public ResponseEntity<StandardError> invalidAcronym(InvalidAcronymException e, HttpServletRequest request) {
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError error = new StandardError();
+
+        error.setTimeStamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Invalid Acronym");
+        error.setMessage(e.getMessage());
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request) {
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError error = new StandardError();
+
+        error.setTimeStamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Database Exception");
+        error.setMessage(e.getMessage());
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+
     }
 }
