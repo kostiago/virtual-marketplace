@@ -1,24 +1,22 @@
 package com.kostiago.backend.services;
 
-import java.util.List;
+
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kostiago.backend.dto.StateDTO;
 import com.kostiago.backend.entities.State;
 import com.kostiago.backend.repositories.StateRepository;
-import com.kostiago.backend.services.exceptions.DatabaseException;
 import com.kostiago.backend.services.exceptions.InvalidAcronymException;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
 
 import jakarta.persistence.EntityNotFoundException;
-
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class StateService {
@@ -27,10 +25,10 @@ public class StateService {
     private StateRepository repository;
 
     @Transactional(readOnly = true)
-    public List<StateDTO> findAll() {
+    public Page<StateDTO> findAllPaged(PageRequest pageRequest) {
 
-        List<State> list = repository.findAll();
-        return list.stream().map(st -> new StateDTO(st)).collect(Collectors.toList());
+        Page<State> list = repository.findAll(pageRequest);
+        return list.map(st -> new StateDTO(st));
     }
 
     @Transactional(readOnly = true)
@@ -46,7 +44,7 @@ public class StateService {
 
         // Validar Sigla do estado
         if (dto.getAcronym() == null || dto.getAcronym().length() != 2) {
-            throw new InvalidAcronymException("A sigla deve ter exatamente dois caracteres.");
+            throw new InvalidAcronymException("A sigla deve ter dois caracteres.");
         }
 
         State entity = new State();
@@ -74,13 +72,15 @@ public class StateService {
 
     @Transactional
     public void delete(Long id) {
-        try {
-            repository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
+
+        Optional<State> state = repository.findById(id);
+
+        if (state.isEmpty()) {
             throw new ResourceNotFoundExeception("ID não encontrado " + id);
-        } catch (DataIntegrityViolationException e) {
-            throw new DatabaseException("Integrity violation");
         }
+        
+            repository.deleteById(id);
+        
     }
 
 }
