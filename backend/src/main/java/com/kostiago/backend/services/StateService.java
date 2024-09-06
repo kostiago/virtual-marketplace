@@ -1,8 +1,6 @@
 package com.kostiago.backend.services;
 
-
 import java.util.Optional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -78,9 +76,9 @@ public class StateService {
         if (state.isEmpty()) {
             throw new ResourceNotFoundExeception("ID não encontrado " + id);
         }
-        
-            repository.deleteById(id);
-        
+
+        repository.deleteById(id);
+
     }
 
 }

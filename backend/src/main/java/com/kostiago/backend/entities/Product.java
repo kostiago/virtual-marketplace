@@ -17,11 +17,12 @@ import lombok.Data;
 @Table(name = "tb_product")
 @Data
 public class Product implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
     private Double price;
     private Double sale;
@@ -31,7 +32,7 @@ public class Product implements Serializable {
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updateDate = Instant.now();
-    
+
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
@@ -40,5 +41,4 @@ public class Product implements Serializable {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    
 }
