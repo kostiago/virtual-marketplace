@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kostiago.backend.dto.CityDTO;
-
 import com.kostiago.backend.entities.City;
-
 import com.kostiago.backend.repositories.CityRepository;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
 
@@ -25,7 +23,7 @@ public class CityService {
     public Page<CityDTO> findAll(PageRequest pageRequest) {
 
         Page<City> list = repository.findAll(pageRequest);
-        return list.map(st -> new CityDTO(st));
+        return list.map(st -> new CityDTO(st, st.getState()));
     }
 
     @Transactional(readOnly = true)
