@@ -46,7 +46,10 @@ public class Product implements Serializable {
     private Brand brand;
 
     @ManyToMany
-    @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @JoinTable(
+        name = "tb_product_category", 
+        joinColumns = @JoinColumn(name = "tb_product_id"), 
+        inverseJoinColumns = @JoinColumn(name = "tb_category_id"))
 
     Set<Category> categories = new HashSet<>();
 
