@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kostiago.backend.dto.CategoryDTO;
 import com.kostiago.backend.entities.Category;
 import com.kostiago.backend.repositories.CategoryRepository;
-import com.kostiago.backend.services.exceptions.CategoryAlreadyRegisteredException;
+import com.kostiago.backend.services.exceptions.AlreadyRegisteredException;
 import com.kostiago.backend.services.exceptions.DatabaseException;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
 
@@ -51,7 +51,7 @@ public class CategoryService {
 
         // Exception caso a categoria ja exista
         if (categoryAlready.isPresent()) {
-            throw new CategoryAlreadyRegisteredException("Categoria '" + dto.getName() + "' já cadastrada");
+            throw new AlreadyRegisteredException("Categoria '" + dto.getName() + "' já cadastrada");
         }
 
         // Se não existir criar nova categoria

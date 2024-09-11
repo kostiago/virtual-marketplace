@@ -1,9 +1,9 @@
 package com.kostiago.backend.controller;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,46 +12,57 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.kostiago.backend.entities.Brand;
+import com.kostiago.backend.dto.BrandDTO;
 import com.kostiago.backend.services.BrandService;
 
 @RestController
 @RequestMapping("api/brand")
 public class BrandController {
-    
+
     @Autowired
     private BrandService service;
 
     @GetMapping
-    public ResponseEntity<List<Brand>> findAll() {
-        List<Brand> brand = service.findAll();
-        return ResponseEntity.ok().body(brand);
+    public ResponseEntity<Page<BrandDTO>> findAll(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "4") Integer size) {
+
+        Page<BrandDTO> dto = service.findAllPaged(page, size);
+        return ResponseEntity.ok().body(dto);
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<BrandDTO> findById(@PathVariable Long id) {
+
+        BrandDTO dto = service.findById(id);
+        return ResponseEntity.ok().body(dto);
+    }
 
     @PostMapping(value = "/")
-    public ResponseEntity<Brand> insert (@RequestBody Brand brand) {
-        
-        brand = service.insert(brand);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(brand.getId()).toUri();
+    public ResponseEntity<BrandDTO> insert(@RequestBody BrandDTO dto) {
 
-        return ResponseEntity.created(uri).body(brand);
+        dto = service.insert(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(dto);
     }
 
-    @PutMapping(value = "/")
-    public ResponseEntity<Brand> update(@RequestBody Brand brand) {
-        
-        brand = service.update(brand);
-        return ResponseEntity.ok().body(brand);
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<BrandDTO> update(@PathVariable Long id, @RequestBody BrandDTO dto) {
+
+        dto = service.update(id, dto);
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete (@PathVariable Long id) {
-        
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+
         service.delete(id);
-        return  ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();
     }
 }

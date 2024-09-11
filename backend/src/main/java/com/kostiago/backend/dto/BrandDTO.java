@@ -3,29 +3,29 @@ package com.kostiago.backend.dto;
 import java.io.Serializable;
 import java.time.Instant;
 
-import com.kostiago.backend.entities.Category;
+import com.kostiago.backend.entities.Brand;
 
-public class CategoryDTO implements Serializable {
+public class BrandDTO implements Serializable {
 
     private Long id;
 
     private String name;
 
-    private Instant createDate;
+    private Instant createDate = Instant.now();
 
-    private Instant updateDate;
+    private Instant updateDate = Instant.now();
 
-    public CategoryDTO() {
+    public BrandDTO() {
     }
 
-    public CategoryDTO(Long id, String name, Instant createDate, Instant updateDate) {
+    public BrandDTO(Long id, String name, Instant createDate, Instant updateDate) {
         this.id = id;
         this.name = name;
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
 
-    public CategoryDTO(Category entity) {
+    public BrandDTO(Brand entity) {
         this.id = entity.getId();
         this.name = entity.getName();
         this.createDate = entity.getCreateDate();

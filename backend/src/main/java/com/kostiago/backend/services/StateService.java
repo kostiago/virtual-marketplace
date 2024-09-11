@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kostiago.backend.dto.StateDTO;
 import com.kostiago.backend.entities.State;
 import com.kostiago.backend.repositories.StateRepository;
-import com.kostiago.backend.services.exceptions.DatabaseException;
 import com.kostiago.backend.services.exceptions.InvalidAcronymException;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
 
