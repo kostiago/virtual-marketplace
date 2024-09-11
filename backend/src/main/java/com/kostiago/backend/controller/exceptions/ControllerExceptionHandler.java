@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.kostiago.backend.services.exceptions.CategoryAlreadyRegisteredException;
 import com.kostiago.backend.services.exceptions.InvalidAcronymException;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
 
@@ -56,6 +57,23 @@ public class ControllerExceptionHandler {
         error.setStatus(status.value());
         error.setError("Database Exception");
         error.setMessage("Estado não pode ser deletado, há cidades vinculadas!");
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+
+    }
+
+    @ExceptionHandler(CategoryAlreadyRegisteredException.class)
+    public ResponseEntity<StandardError> categoryAlready(CategoryAlreadyRegisteredException e,
+            HttpServletRequest request) {
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError error = new StandardError();
+
+        error.setTimeStamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Category Already Registered");
+        error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
 
         return ResponseEntity.status(status).body(error);

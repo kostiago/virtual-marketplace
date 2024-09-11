@@ -3,6 +3,7 @@ package com.kostiago.backend.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kostiago.backend.dto.StateDTO;
 import com.kostiago.backend.entities.State;
 import com.kostiago.backend.repositories.StateRepository;
+import com.kostiago.backend.services.exceptions.DatabaseException;
 import com.kostiago.backend.services.exceptions.InvalidAcronymException;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
 
@@ -77,7 +79,11 @@ public class StateService {
             throw new ResourceNotFoundExeception("ID não encontrado " + id);
         }
 
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("Violação de integridade: " + e.getMessage());
+        }
 
     }
 
