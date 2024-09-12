@@ -46,10 +46,7 @@ public class Product implements Serializable {
     private Brand brand;
 
     @ManyToMany
-    @JoinTable(
-        name = "tb_product_category", 
-        joinColumns = @JoinColumn(name = "tb_product_id"), 
-        inverseJoinColumns = @JoinColumn(name = "tb_category_id"))
+    @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "tb_product_id"), inverseJoinColumns = @JoinColumn(name = "tb_category_id"))
 
     Set<Category> categories = new HashSet<>();
 
@@ -137,8 +134,16 @@ public class Product implements Serializable {
         return brand;
     }
 
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
     public Set<Category> getCategories() {
         return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
 }

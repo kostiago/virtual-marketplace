@@ -6,32 +6,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.kostiago.backend.entities.Brand;
 import com.kostiago.backend.entities.Category;
 import com.kostiago.backend.entities.Product;
 
-
-public class ProductDTO implements  Serializable {
+public class ProductDTO implements Serializable {
 
     private Integer id;
     private String name;
     private String shortDescription;
     private String description;
     private Double price;
-    private Double sale;   
+    private Double sale;
     private Instant createDate;
     private Instant updateDate;
 
-    //Atributo para o relacionamento ManyToOne com Brand
+    // Atributo para o relacionamento ManyToOne com Brand
     private BrandDTO brand;
 
-    //Atributo para o relacionamento ManyToMany com Category
-    private List<CategoryDTO> category = new ArrayList<>();
+    // Atributo para o relacionamento ManyToMany com Category
+    private List<CategoryDTO> categories = new ArrayList<>();
 
-    public ProductDTO() {}
+    public ProductDTO() {
+    }
 
-    public ProductDTO(BrandDTO brand, Instant createDate, String description, Integer id, String name, Double price, Double sale, String shortDescription, Instant updateDate) {
-        this.brand = brand;
+    public ProductDTO(Instant createDate, String description, Integer id, String name, Double price,
+            Double sale, String shortDescription, Instant updateDate) {
+
         this.createDate = createDate;
         this.description = description;
         this.id = id;
@@ -42,8 +42,8 @@ public class ProductDTO implements  Serializable {
         this.updateDate = updateDate;
     }
 
-    public ProductDTO( Product entity) {
-        
+    public ProductDTO(Product entity) {
+
         this.createDate = entity.getCreateDate();
         this.description = entity.getDescription();
         this.id = entity.getId();
@@ -53,19 +53,18 @@ public class ProductDTO implements  Serializable {
         this.shortDescription = entity.getShortDescription();
         this.updateDate = entity.getUpdateDate();
 
-        //Converte a entidade brand em DTO (ManyToOne)
-        if(entity.getBrand() != null) {
+        // Converte a entidade brand em DTO (ManyToOne)
+        if (entity.getBrand() != null) {
             this.brand = new BrandDTO(entity.getBrand());
         }
     }
 
     public ProductDTO(Product entity, Set<Category> categories) {
-        
+
         this(entity);
 
         // ManyToMany: Convertendo as entidades Category em CategoryDTO
-
-        categories.forEach(cat -> this.category.add(new CategoryDTO(cat)));
+        categories.forEach(cat -> this.categories.add(new CategoryDTO(cat)));
     }
 
     public Integer getId() {
@@ -140,14 +139,12 @@ public class ProductDTO implements  Serializable {
         this.brand = brand;
     }
 
-    public List<CategoryDTO> getCategory() {
-        return category;
+    public List<CategoryDTO> getCategories() {
+        return categories;
     }
 
-    public void setCategory(List<CategoryDTO> category) {
-        this.category = category;
+    public void setCategories(List<CategoryDTO> categories) {
+        this.categories = categories;
     }
 
-    
-    
 }

@@ -32,7 +32,7 @@ INSERT INTO tb_category (name, create_date, update_date) VALUES ('Moda', NOW(), 
 INSERT INTO tb_category (name, create_date, update_date) VALUES ('Saúde e Beleza', NOW(), NOW());
 
 -- Inserindo cidades na tabela tb_product
-INSERT INTO tb_product (name, short_description, description, price, sale, brand_id, create_date, update_date) VALUES ('Nike Air Max', 'Tênis confortável' 'Tênis da linha Air Max da Nike.', 699.99, 0.1, 1, NOW(), NOW());
+INSERT INTO tb_product (name, short_description, description, price, sale, brand_id, create_date, update_date) VALUES ('Nike Air Max', 'Tênis confortável','Tênis da linha Air Max da Nike.', 699.99, 0.1, 1, NOW(), NOW());
 
 INSERT INTO tb_product (name, short_description, description, price, sale, brand_id, create_date, update_date) VALUES ('Adidas Ultraboost', 'Tênis para corrida', 'Tênis de alta performance da Adidas.', 749.99, 0.15, 2, NOW(), NOW());
 
