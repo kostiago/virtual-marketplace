@@ -3,6 +3,7 @@ package com.kostiago.backend.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,10 @@ import com.kostiago.backend.repositories.BrandRepository;
 import com.kostiago.backend.repositories.CategoryRepository;
 import com.kostiago.backend.repositories.ProductRepository;
 import com.kostiago.backend.services.exceptions.AlreadyRegisteredException;
+import com.kostiago.backend.services.exceptions.DatabaseException;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ProductService {
@@ -71,6 +75,44 @@ public class ProductService {
 
     }
 
+    @Transactional
+    public ProductDTO update(Long id, ProductDTO dto) {
+
+        try {
+            Product entity = repository.getReferenceById(id);
+            copyDtoToEntity(dto, entity);
+            entity = repository.saveAndFlush(entity);
+
+            return new ProductDTO(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundExeception("ID '" + id + "' não encontrado");
+        }
+    }
+
+    @Transactional
+    public void delete(Long id) {
+
+        // Verifica se o produto existe
+        Optional<Product> entity = repository.findById(id);
+
+        // Exception caso a marca exista
+        if (entity.isEmpty()) {
+            throw new ResourceNotFoundExeception("ID' " + id + "' não encontrado");
+        }
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Violação de Integridade" + e.getMessage());
+        }
+
+    }
+
+    /**
+     * METODO AUXILIAR
+     * 
+     * @param dto
+     * @param entity
+     */
     private void copyDtoToEntity(ProductDTO dto, Product entity) {
         entity.setName(dto.getName());
         entity.setShortDescription(dto.getShortDescription());
