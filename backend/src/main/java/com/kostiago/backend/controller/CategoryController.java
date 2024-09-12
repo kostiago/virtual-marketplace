@@ -23,7 +23,7 @@ import com.kostiago.backend.services.CategoryService;
 @RequestMapping("/api/category")
 public class CategoryController {
 
-    @Autowired
+    @Autowired 
     private CategoryService service;
 
     @GetMapping

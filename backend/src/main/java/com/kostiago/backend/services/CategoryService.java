@@ -23,7 +23,7 @@ import jakarta.persistence.EntityNotFoundException;
 public class CategoryService {
 
     @Autowired
-    private CategoryRepository repository;
+    private CategoryRepository repository; 
 
     @Transactional(readOnly = true)
     public Page<CategoryDTO> findAllPaged(Integer page, Integer size) {
