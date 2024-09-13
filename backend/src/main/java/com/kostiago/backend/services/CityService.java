@@ -23,7 +23,7 @@ public class CityService {
     public Page<CityDTO> findAll(PageRequest pageRequest) {
 
         Page<City> list = repository.findAll(pageRequest);
-        return list.map(st -> new CityDTO(st, st.getState()));
+        return list.map(st -> new CityDTO(st));
     }
 
     @Transactional(readOnly = true)
@@ -31,7 +31,7 @@ public class CityService {
 
         Optional<City> object = repository.findById(id);
         City entity = object.orElseThrow(() -> new ResourceNotFoundExeception("ID do produto não encontrado"));
-        return new CityDTO(entity, entity.getState());
+        return new CityDTO(entity);
     }
 
     @Transactional

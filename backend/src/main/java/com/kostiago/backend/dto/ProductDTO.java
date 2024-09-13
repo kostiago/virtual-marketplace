@@ -21,7 +21,7 @@ public class ProductDTO implements Serializable {
     private Instant updateDate;
 
     // Atributo para o relacionamento ManyToOne com Brand
-    private BrandDTO brand;
+    private BrandDTO brand; 
 
     // Atributo para o relacionamento ManyToMany com Category
     private List<CategoryDTO> categories = new ArrayList<>();

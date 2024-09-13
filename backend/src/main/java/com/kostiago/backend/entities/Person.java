@@ -37,11 +37,13 @@ public class Person  implements  Serializable{
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updateDate;
 
-    public Person() {}
-
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
+    
+    public Person() {}
+
+   
 
     @PrePersist
     protected void onCreate() {

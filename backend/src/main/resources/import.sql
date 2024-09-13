@@ -89,3 +89,14 @@ INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (9, 1);  
 INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (10, 5); -- HP Spectre x360 -> Computadores
 INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (10, 1); -- HP Spectre x360 -> Eletrônicos
 
+-- Inserindo Pessoas na tabela tb_person
+INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('João Silva', '123.456.789-00', 'joao.silva@email.com', 'senha123', 'Rua das Flores, 123', '12345-678', NOW(), NOW(), 1);
+
+INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Maria Oliveira', '987.654.321-00', 'maria.oliveira@email.com', 'senha456', 'Av. Paulista, 456', '98765-432', NOW(), NOW(), 2);
+
+INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Carlos Souza', '111.222.333-44', 'carlos.souza@email.com', 'senha789', 'Rua da Praia, 789', '12345-987', NOW(), NOW(), 3);
+
+INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Ana Costa', '555.666.777-88', 'ana.costa@email.com', 'senhaABC', 'Rua Central, 101', '67890-123', NOW(), NOW(), 4);
+
+INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Paulo Mendes', '999.888.777-66', 'paulo.mendes@email.com', 'senhaDEF', 'Rua dos Pinheiros, 202', '54321-098', NOW(), NOW(), 5);
+

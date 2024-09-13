@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.Instant;
 
 import com.kostiago.backend.entities.City;
-import com.kostiago.backend.entities.State;
 
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -36,12 +35,12 @@ public class CityDTO implements Serializable {
         this.name = entity.getName();
         this.createDate = entity.getCreateDate();
         this.updateDate = entity.getUpdateDate();
+
+        if(entity.getState() != null) {
+            this.state = new StateDTO(entity.getState());
+        }
     }
 
-    public CityDTO(City entity, State state) {
-        this(entity);
-        this.state = new StateDTO(state);
-    }
 
     public Integer getId() {
         return id;

@@ -20,7 +20,7 @@ import com.kostiago.backend.dto.BrandDTO;
 import com.kostiago.backend.services.BrandService;
 
 @RestController
-@RequestMapping("api/brand")
+@RequestMapping("api/brand") 
 public class BrandController {
 
     @Autowired
