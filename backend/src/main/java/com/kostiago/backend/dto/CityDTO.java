@@ -10,7 +10,7 @@ import jakarta.persistence.PreUpdate;
 
 public class CityDTO implements Serializable {
 
-    private Integer id;
+    private Long id;
 
     private String name;
 
@@ -23,7 +23,7 @@ public class CityDTO implements Serializable {
     public CityDTO() {
     }
 
-    public CityDTO(Integer id, String name, Instant createDate, Instant updateDate) {
+    public CityDTO(Long id, String name, Instant createDate, Instant updateDate) {
         this.id = id;
         this.name = name;
         this.createDate = createDate;
@@ -36,17 +36,16 @@ public class CityDTO implements Serializable {
         this.createDate = entity.getCreateDate();
         this.updateDate = entity.getUpdateDate();
 
-        if(entity.getState() != null) {
+        if (entity.getState() != null) {
             this.state = new StateDTO(entity.getState());
         }
     }
 
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -21,7 +21,7 @@ public class City implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String name;
 
@@ -38,18 +38,18 @@ public class City implements Serializable {
     public City() {
     }
 
-    public City(Integer id, String name, Instant createDate, Instant updateDate) {
+    public City(Long id, String name, Instant createDate, Instant updateDate) {
         this.id = id;
         this.name = name;
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

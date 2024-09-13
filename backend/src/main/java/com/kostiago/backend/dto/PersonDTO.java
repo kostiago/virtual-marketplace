@@ -5,9 +5,8 @@ import java.time.Instant;
 
 import com.kostiago.backend.entities.Person;
 
+public class PersonDTO implements Serializable {
 
-public class PersonDTO implements  Serializable {
-    
     private Long id;
     private String name;
     private String cpf;
@@ -19,9 +18,11 @@ public class PersonDTO implements  Serializable {
 
     private CityDTO city;
 
-    public PersonDTO() {}
+    public PersonDTO() {
+    }
 
-    public PersonDTO(String address, String cep, String cpf, Instant createDate, String email, Long id, String name, Instant updateDate) {
+    public PersonDTO(String address, String cep, String cpf, Instant createDate, String email, Long id, String name,
+            Instant updateDate) {
         this.address = address;
         this.cep = cep;
         this.cpf = cpf;
@@ -42,8 +43,7 @@ public class PersonDTO implements  Serializable {
         this.name = entity.getName();
         this.updateDate = entity.getUpdateDate();
 
-
-        if(entity.getCity() != null) {
+        if (entity.getCity() != null) {
             this.city = new CityDTO(entity.getCity());
         }
     }
@@ -120,11 +120,4 @@ public class PersonDTO implements  Serializable {
         this.city = city;
     }
 
-
-    
-
-
-
 }
-    
-
