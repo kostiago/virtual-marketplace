@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -50,18 +49,23 @@ public class ProductImageService {
     @Transactional
     public ProductImageDTO insert(Long id, MultipartFile file) {
 
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundExeception("Produto não encontrado!"));
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundExeception("Produto não encontrado"));
 
         ProductImage object = new ProductImage();
 
         try {
-            if (file.isEmpty()) {
+            if (!file.isEmpty()) {
                 byte[] bytes = file.getBytes();
 
                 String imageName = String.valueOf(product.getId() + file.getOriginalFilename());
 
-                Path path = Paths.get("C:/imagens/" + imageName);
+                Optional<ProductImage> existingImage = repository.findByName(imageName);
+
+                if(existingImage.isPresent()) {
+                    throw new ResourceNotFoundExeception("Imagem ja existe");
+                }
+
+                Path path = Paths.get("c:/imagens/" + imageName);
                 Files.write(path, bytes);
 
                 object.setName(imageName);
@@ -71,12 +75,14 @@ public class ProductImageService {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException("Erro ao salvar o arquivo de imagem");
         }
 
         object.setProduct(product);
         repository.saveAndFlush(object);
         System.err.println("OU AQUI");
-        return new ProductImageDTO();
+        return new ProductImageDTO(object);
 
     }
+
 }

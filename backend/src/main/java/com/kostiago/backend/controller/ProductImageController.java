@@ -1,7 +1,5 @@
 package com.kostiago.backend.controller;
 
-import java.net.URI;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kostiago.backend.dto.ProductImageDTO;
 import com.kostiago.backend.services.ProductImageService;
@@ -41,7 +38,7 @@ public class ProductImageController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<ProductImageDTO> insert(@RequestParam Long id, @RequestParam MultipartFile file) {
+    public ResponseEntity<ProductImageDTO> insert(@RequestParam("id") Long id, @RequestParam MultipartFile file) {
 
         ProductImageDTO dto = service.insert(id, file);
 
