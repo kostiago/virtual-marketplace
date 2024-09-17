@@ -100,3 +100,6 @@ INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, up
 
 INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Paulo Mendes', '999.888.777-66', 'paulo.mendes@email.com', 'senhaDEF', 'Rua dos Pinheiros, 202', '54321-098', NOW(), NOW(), 5);
 
+
+-- Inserindo Permissões na tabela tb_permission
+INSERT INTO tb_permission (name, create_date, update_date) VALUES ('READ', NOW(), NOW()), ('WRITE', NOW(), NOW()), ('DELETE', NOW(), NOW()), ('ADMIN', NOW(), NOW());
