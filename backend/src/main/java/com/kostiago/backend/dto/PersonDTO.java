@@ -2,7 +2,11 @@ package com.kostiago.backend.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
+import com.kostiago.backend.entities.Permission;
 import com.kostiago.backend.entities.Person;
 
 public class PersonDTO implements Serializable {
@@ -17,6 +21,8 @@ public class PersonDTO implements Serializable {
     private Instant updateDate;
 
     private CityDTO city;
+
+    private List<PermissionDTO> permissions = new ArrayList<>();
 
     public PersonDTO() {
     }
@@ -46,6 +52,12 @@ public class PersonDTO implements Serializable {
         if (entity.getCity() != null) {
             this.city = new CityDTO(entity.getCity());
         }
+    }
+
+    public PersonDTO(Person entity, Set<Permission> permissions) {
+        this(entity);
+
+        permissions.forEach(personPermission -> this.permissions.add(new PermissionDTO(personPermission)));
     }
 
     public Long getId() {
@@ -118,6 +130,14 @@ public class PersonDTO implements Serializable {
 
     public void setCity(CityDTO city) {
         this.city = city;
+    }
+
+    public List<PermissionDTO> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<PermissionDTO> permissions) {
+        this.permissions = permissions;
     }
 
 }

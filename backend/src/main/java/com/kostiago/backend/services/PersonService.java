@@ -10,10 +10,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kostiago.backend.dto.PermissionDTO;
 import com.kostiago.backend.dto.PersonDTO;
 import com.kostiago.backend.entities.City;
+import com.kostiago.backend.entities.Permission;
 import com.kostiago.backend.entities.Person;
 import com.kostiago.backend.repositories.CityRepository;
+import com.kostiago.backend.repositories.PermissionRepository;
 import com.kostiago.backend.repositories.PersonRepository;
 import com.kostiago.backend.services.exceptions.AlreadyRegisteredException;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
@@ -25,6 +28,9 @@ public class PersonService {
 
     @Autowired
     private PersonRepository repository;
+
+    @Autowired
+    private PermissionRepository permissionRepository;
 
     @Autowired
     private CityRepository cityRepository;
@@ -45,7 +51,7 @@ public class PersonService {
         Optional<Person> object = repository.findById(id);
         Person entity = object.orElseThrow(() -> new ResourceNotFoundExeception("ID '" + id + "' não encontrado"));
 
-        return new PersonDTO(entity);
+        return new PersonDTO(entity, entity.getPermissions());
     }
 
     @Transactional
@@ -88,7 +94,6 @@ public class PersonService {
         Optional<Person> entity = repository.findById(id);
 
         // Exception caso a pessoa exista
-
         if (entity.isEmpty()) {
             throw new ResourceNotFoundExeception("ID '" + id + "' não encontrado");
         }
@@ -103,7 +108,7 @@ public class PersonService {
 
     /**
      * METODO AUXILIAR
-     * 
+     *
      * @param dto
      * @param entity
      */
@@ -118,9 +123,15 @@ public class PersonService {
 
         // Verifica se o DTO tem um cidade
         City city = cityRepository.findById(dto.getCity().getId())
-                .orElseThrow(() -> new ResourceNotFoundExeception("Pessoa não encontrda"));
+                .orElseThrow(() -> new ResourceNotFoundExeception("Cidade  não encontrada"));
 
         entity.setCity(city);
+
+        entity.getPermissions().clear();
+        for (PermissionDTO permissionDTO : dto.getPermissions()) {
+            Permission permission = permissionRepository.getReferenceById(permissionDTO.getId());
+            entity.getPermissions().add(permission);
+        }
     }
 
 }
