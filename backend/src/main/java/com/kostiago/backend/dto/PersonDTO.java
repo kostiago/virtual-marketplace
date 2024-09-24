@@ -5,15 +5,28 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.kostiago.backend.entities.Person;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 public class PersonDTO implements Serializable {
 
     private Long id;
+
+    @NotBlank(message = "Campo obrigatório")
     private String name;
+
+    @CPF(message = "Informe um CPF Válido")
     private String cpf;
+
+    @Email(message = "Informe um email válido")
     private String email;
+
     private String address;
+
     private String cep;
     private Instant createDate;
     private Instant updateDate;

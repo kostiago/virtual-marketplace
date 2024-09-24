@@ -102,4 +102,4 @@ INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, up
 
 
 -- Inserindo Permissões na tabela tb_permission
-INSERT INTO tb_permission (name, create_date, update_date) VALUES ('READ', NOW(), NOW()), ('WRITE', NOW(), NOW()), ('DELETE', NOW(), NOW()), ('ADMIN', NOW(), NOW());
+INSERT INTO tb_permission (name, create_date, update_date) VALUES ('ROLE_USER', NOW(), NOW()), ('ROLE_OPERATOR', NOW(), NOW()), ('ROLER_ADMIN', NOW(), NOW());

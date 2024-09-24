@@ -20,6 +20,8 @@ import com.kostiago.backend.dto.PersonDTO;
 import com.kostiago.backend.dto.PersonInsertDTO;
 import com.kostiago.backend.services.PersonService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api/person")
 public class PersonController {
@@ -44,7 +46,7 @@ public class PersonController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<PersonDTO> insert(@RequestBody PersonInsertDTO dto) {
+    public ResponseEntity<PersonDTO> insert(@Valid @RequestBody PersonInsertDTO dto) {
 
         PersonDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder
@@ -55,7 +57,7 @@ public class PersonController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<PersonDTO> update(@PathVariable Long id, @RequestBody PersonDTO dto) {
+    public ResponseEntity<PersonDTO> update(@PathVariable Long id, @Valid @RequestBody PersonDTO dto) {
 
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);

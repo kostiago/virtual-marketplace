@@ -32,6 +32,9 @@ public class PersonService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
+    private EmailService emailService;
+
+    @Autowired
     private PersonRepository repository;
 
     @Autowired
@@ -80,6 +83,9 @@ public class PersonService {
         copyDtoToEntity(dto, entity);
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         repository.saveAndFlush(entity);
+        emailService.sendEmailText(entity.getEmail(), "Cadastro na virtual marketplace",
+                "registro na loja foi realizado com sucesso. Em breve você receberá a senha de acesso por e-mail!!");
+
         return new PersonDTO(entity);
 
     }
