@@ -29,7 +29,11 @@ public class Person implements Serializable {
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
     private String cpf;
+
+    @Column(unique = true)
     private String email;
     private String password;
     private String address;
