@@ -8,6 +8,7 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -44,15 +45,15 @@ public class Person implements Serializable {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @ManyToMany
-    @JoinTable(name = "tb_person_permission",
-            joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "tb_person_permission", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
     Set<Permission> permissions = new HashSet<>();
 
     public Person() {
     }
 
-    public Person(String address, String cep, String cpf, Instant createDate, String email, Long id, String name, String password, Instant updateDate) {
+    public Person(String address, String cep, String cpf, Instant createDate, String email, Long id, String name,
+            String password, Instant updateDate) {
         this.address = address;
         this.cep = cep;
         this.cpf = cpf;

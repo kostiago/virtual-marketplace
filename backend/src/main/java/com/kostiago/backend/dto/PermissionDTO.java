@@ -13,11 +13,13 @@ public class PermissionDTO implements Serializable {
     }
 
     public PermissionDTO(Long id, String name) {
+        super();
         this.id = id;
         this.name = name;
     }
 
     public PermissionDTO(Permission entity) {
+        super();
         this.id = entity.getId();
         this.name = entity.getName();
     }

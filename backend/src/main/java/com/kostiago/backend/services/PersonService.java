@@ -7,11 +7,13 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kostiago.backend.dto.PermissionDTO;
 import com.kostiago.backend.dto.PersonDTO;
+import com.kostiago.backend.dto.PersonInsertDTO;
 import com.kostiago.backend.entities.City;
 import com.kostiago.backend.entities.Permission;
 import com.kostiago.backend.entities.Person;
@@ -25,6 +27,9 @@ import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class PersonService {
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private PersonRepository repository;
@@ -51,25 +56,30 @@ public class PersonService {
         Optional<Person> object = repository.findById(id);
         Person entity = object.orElseThrow(() -> new ResourceNotFoundExeception("ID '" + id + "' não encontrado"));
 
-        return new PersonDTO(entity, entity.getPermissions());
+        return new PersonDTO(entity);
     }
 
     @Transactional
-    public PersonDTO insert(PersonDTO dto) {
+    public PersonDTO insert(PersonInsertDTO dto) {
 
         // Verfica se a Pessoa ja existe
-        Optional<Person> personAlready = repository.findByCpf(dto.getCpf());
+        Optional<Person> cpfAlready = repository.findByCpf(dto.getCpf());
+        Optional<Person> emailAlready = repository.findByEmail(dto.getEmail());
 
-        // Exception caso a Pessoa ja exista
-        if (personAlready.isPresent()) {
+        // Verifica se o CPF ja existe no banco de dados
+        if (cpfAlready.isPresent()) {
             throw new AlreadyRegisteredException("CPF '" + dto.getCpf() + "' já cadastrado!");
+        }
+        // Verifica se o email ja existe no banco de dados
+        if (emailAlready.isPresent()) {
+            throw new AlreadyRegisteredException("Email '" + dto.getEmail() + "' já cadastrado!");
         }
 
         // Se não existir cria uma nova Pessoa
         Person entity = new Person();
         copyDtoToEntity(dto, entity);
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         repository.saveAndFlush(entity);
-
         return new PersonDTO(entity);
 
     }

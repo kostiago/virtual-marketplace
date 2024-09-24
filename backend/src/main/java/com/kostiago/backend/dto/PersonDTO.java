@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import com.kostiago.backend.entities.Permission;
 import com.kostiago.backend.entities.Person;
 
 public class PersonDTO implements Serializable {
@@ -52,12 +50,10 @@ public class PersonDTO implements Serializable {
         if (entity.getCity() != null) {
             this.city = new CityDTO(entity.getCity());
         }
-    }
 
-    public PersonDTO(Person entity, Set<Permission> permissions) {
-        this(entity);
+        entity.getPermissions()
+                .forEach(personPermission -> this.permissions.add(new PermissionDTO(personPermission)));
 
-        permissions.forEach(personPermission -> this.permissions.add(new PermissionDTO(personPermission)));
     }
 
     public Long getId() {
@@ -134,10 +130,6 @@ public class PersonDTO implements Serializable {
 
     public List<PermissionDTO> getPermissions() {
         return permissions;
-    }
-
-    public void setPermissions(List<PermissionDTO> permissions) {
-        this.permissions = permissions;
     }
 
 }

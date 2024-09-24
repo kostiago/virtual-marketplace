@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kostiago.backend.dto.PersonDTO;
+import com.kostiago.backend.dto.PersonInsertDTO;
 import com.kostiago.backend.services.PersonService;
 
 @RestController
@@ -43,12 +44,12 @@ public class PersonController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<PersonDTO> insert(@RequestBody PersonDTO dto) {
+    public ResponseEntity<PersonDTO> insert(@RequestBody PersonInsertDTO dto) {
 
-        dto = service.insert(dto);
+        PersonDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(dto.getId()).toUri();
+                .buildAndExpand(newDto.getId()).toUri();
 
         return ResponseEntity.created(uri).body(dto);
     }

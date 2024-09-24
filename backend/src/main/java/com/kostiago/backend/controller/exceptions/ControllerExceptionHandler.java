@@ -72,7 +72,7 @@ public class ControllerExceptionHandler {
 
         error.setTimeStamp(Instant.now());
         error.setStatus(status.value());
-        error.setError("Category Already Registered");
+        error.setError("Object Already Registered in the Database");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
 
