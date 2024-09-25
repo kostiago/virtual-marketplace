@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kostiago.backend.dto.UserDTO;
 import com.kostiago.backend.dto.UserInsertDTO;
+import com.kostiago.backend.dto.UserUpdateDTO;
 import com.kostiago.backend.services.UserService;
 
 import jakarta.validation.Valid;
@@ -57,10 +58,10 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserDTO dto) {
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
 
-        dto = service.update(id, dto);
-        return ResponseEntity.ok().body(dto);
+        UserDTO newdto = service.update(id, dto);
+        return ResponseEntity.ok().body(newdto);
     }
 
     @DeleteMapping(value = "/{id}")

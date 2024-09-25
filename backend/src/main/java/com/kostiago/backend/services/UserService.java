@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kostiago.backend.dto.PermissionDTO;
 import com.kostiago.backend.dto.UserDTO;
 import com.kostiago.backend.dto.UserInsertDTO;
+import com.kostiago.backend.dto.UserUpdateDTO;
 import com.kostiago.backend.entities.City;
 import com.kostiago.backend.entities.Permission;
 import com.kostiago.backend.entities.User;
@@ -78,7 +79,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO update(Long id, UserDTO dto) {
+    public UserDTO update(Long id, UserUpdateDTO dto) {
         try {
 
             User entity = repository.getReferenceById(id);
