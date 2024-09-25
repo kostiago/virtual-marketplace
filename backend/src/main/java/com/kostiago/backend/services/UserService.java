@@ -20,7 +20,7 @@ import com.kostiago.backend.entities.User;
 import com.kostiago.backend.repositories.CityRepository;
 import com.kostiago.backend.repositories.PermissionRepository;
 import com.kostiago.backend.repositories.UserRepository;
-import com.kostiago.backend.services.exceptions.AlreadyRegisteredException;
+
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -65,20 +65,7 @@ public class UserService {
     @Transactional
     public UserDTO insert(UserInsertDTO dto) {
 
-        // Verfica se a Pessoa ja existe
-        Optional<User> cpfAlready = repository.findByCpf(dto.getCpf());
-        Optional<User> emailAlready = repository.findByEmail(dto.getEmail());
-
-        // Verifica se o CPF ja existe no banco de dados
-        if (cpfAlready.isPresent()) {
-            throw new AlreadyRegisteredException("CPF '" + dto.getCpf() + "' já cadastrado!");
-        }
-        // Verifica se o email ja existe no banco de dados
-        if (emailAlready.isPresent()) {
-            throw new AlreadyRegisteredException("Email '" + dto.getEmail() + "' já cadastrado!");
-        }
-
-        // Se não existir cria uma nova Pessoa
+        // Cria uma nova Pessoa
         User entity = new User();
         copyDtoToEntity(dto, entity);
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));

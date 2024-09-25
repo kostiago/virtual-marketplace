@@ -1,5 +1,8 @@
 package com.kostiago.backend.dto;
 
+import com.kostiago.backend.services.validation.UserInsertValid;
+
+@UserInsertValid
 public class UserInsertDTO extends UserDTO {
 
     private String password;
