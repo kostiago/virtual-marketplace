@@ -5,21 +5,20 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.validator.constraints.br.CPF;
-
 import com.kostiago.backend.entities.Person;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class PersonDTO implements Serializable {
 
     private Long id;
 
     @NotBlank(message = "Campo obrigatório")
+    @Size(min = 5, max = 60, message = "Nome deve ter entre 5 e 60 caracteres")
     private String name;
 
-    @CPF(message = "Informe um CPF Válido")
     private String cpf;
 
     @Email(message = "Informe um email válido")

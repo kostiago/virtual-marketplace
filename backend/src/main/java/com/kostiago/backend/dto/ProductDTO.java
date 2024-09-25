@@ -9,19 +9,32 @@ import java.util.Set;
 import com.kostiago.backend.entities.Category;
 import com.kostiago.backend.entities.Product;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
 public class ProductDTO implements Serializable {
 
     private Integer id;
+
+    @Size(min = 5, max = 60, message = "Nome deve ter entre 5 e 60 caracteres")
+    @NotBlank
     private String name;
+
     private String shortDescription;
     private String description;
+
+    @Positive(message = "Preço deve ser maior que zero")
     private Double price;
+
+    @Positive(message = "Preço de venda deve ser maior que zero")
     private Double sale;
+
     private Instant createDate;
     private Instant updateDate;
 
     // Atributo para o relacionamento ManyToOne com Brand
-    private BrandDTO brand; 
+    private BrandDTO brand;
 
     // Atributo para o relacionamento ManyToMany com Category
     private List<CategoryDTO> categories = new ArrayList<>();
