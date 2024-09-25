@@ -1,13 +1,13 @@
 package com.kostiago.backend.dto;
 
-public class PersonInsertDTO extends PersonDTO {
+public class UserInsertDTO extends UserDTO {
 
     private String password;
 
-    public PersonInsertDTO() {
+    public UserInsertDTO() {
     }
 
-    public PersonInsertDTO(String password) {
+    public UserInsertDTO(String password) {
         super();
         this.password = password;
     }

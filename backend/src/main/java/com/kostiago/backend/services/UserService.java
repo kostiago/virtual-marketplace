@@ -12,21 +12,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kostiago.backend.dto.PermissionDTO;
-import com.kostiago.backend.dto.PersonDTO;
-import com.kostiago.backend.dto.PersonInsertDTO;
+import com.kostiago.backend.dto.UserDTO;
+import com.kostiago.backend.dto.UserInsertDTO;
 import com.kostiago.backend.entities.City;
 import com.kostiago.backend.entities.Permission;
-import com.kostiago.backend.entities.Person;
+import com.kostiago.backend.entities.User;
 import com.kostiago.backend.repositories.CityRepository;
 import com.kostiago.backend.repositories.PermissionRepository;
-import com.kostiago.backend.repositories.PersonRepository;
+import com.kostiago.backend.repositories.UserRepository;
 import com.kostiago.backend.services.exceptions.AlreadyRegisteredException;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class PersonService {
+public class UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -35,7 +35,7 @@ public class PersonService {
     private EmailService emailService;
 
     @Autowired
-    private PersonRepository repository;
+    private UserRepository repository;
 
     @Autowired
     private PermissionRepository permissionRepository;
@@ -44,30 +44,30 @@ public class PersonService {
     private CityRepository cityRepository;
 
     @Transactional(readOnly = true)
-    public Page<PersonDTO> findAllPaged(Integer page, Integer size) {
+    public Page<UserDTO> findAllPaged(Integer page, Integer size) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Person> list = repository.findAll(pageable);
+        Page<User> list = repository.findAll(pageable);
 
-        return list.map(pers -> new PersonDTO(pers));
+        return list.map(pers -> new UserDTO(pers));
 
     }
 
     @Transactional(readOnly = true)
-    public PersonDTO findById(Long id) {
+    public UserDTO findById(Long id) {
 
-        Optional<Person> object = repository.findById(id);
-        Person entity = object.orElseThrow(() -> new ResourceNotFoundExeception("ID '" + id + "' não encontrado"));
+        Optional<User> object = repository.findById(id);
+        User entity = object.orElseThrow(() -> new ResourceNotFoundExeception("ID '" + id + "' não encontrado"));
 
-        return new PersonDTO(entity);
+        return new UserDTO(entity);
     }
 
     @Transactional
-    public PersonDTO insert(PersonInsertDTO dto) {
+    public UserDTO insert(UserInsertDTO dto) {
 
         // Verfica se a Pessoa ja existe
-        Optional<Person> cpfAlready = repository.findByCpf(dto.getCpf());
-        Optional<Person> emailAlready = repository.findByEmail(dto.getEmail());
+        Optional<User> cpfAlready = repository.findByCpf(dto.getCpf());
+        Optional<User> emailAlready = repository.findByEmail(dto.getEmail());
 
         // Verifica se o CPF ja existe no banco de dados
         if (cpfAlready.isPresent()) {
@@ -79,26 +79,26 @@ public class PersonService {
         }
 
         // Se não existir cria uma nova Pessoa
-        Person entity = new Person();
+        User entity = new User();
         copyDtoToEntity(dto, entity);
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         repository.saveAndFlush(entity);
         emailService.sendEmailText(entity.getEmail(), "Cadastro na virtual marketplace",
                 "registro na loja foi realizado com sucesso. Em breve você receberá a senha de acesso por e-mail!!");
 
-        return new PersonDTO(entity);
+        return new UserDTO(entity);
 
     }
 
     @Transactional
-    public PersonDTO update(Long id, PersonDTO dto) {
+    public UserDTO update(Long id, UserDTO dto) {
         try {
 
-            Person entity = repository.getReferenceById(id);
+            User entity = repository.getReferenceById(id);
             copyDtoToEntity(dto, entity);
             entity = repository.saveAndFlush(entity);
 
-            return new PersonDTO(entity);
+            return new UserDTO(entity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundExeception("ID '" + id + "' não encontrado");
         }
@@ -107,7 +107,7 @@ public class PersonService {
     public void delete(Long id) {
 
         // Verifica se a pessoa existe
-        Optional<Person> entity = repository.findById(id);
+        Optional<User> entity = repository.findById(id);
 
         // Exception caso a pessoa exista
         if (entity.isEmpty()) {
@@ -128,7 +128,7 @@ public class PersonService {
      * @param dto
      * @param entity
      */
-    private void copyDtoToEntity(PersonDTO dto, Person entity) {
+    private void copyDtoToEntity(UserDTO dto, User entity) {
         entity.setName(dto.getName());
         entity.setCpf(dto.getCpf());
         entity.setEmail(dto.getEmail());

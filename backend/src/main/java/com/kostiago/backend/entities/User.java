@@ -29,7 +29,11 @@ public class User implements Serializable {
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
     private String cpf;
+
+    @Column(unique = true)
     private String email;
     private String password;
     private String address;
@@ -46,14 +50,14 @@ public class User implements Serializable {
     private City city;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "tb_person_permission",
-            joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    private Set<Permission> permissions = new HashSet<>();
+    @JoinTable(name = "tb_person_permission", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    Set<Permission> permissions = new HashSet<>();
 
     public User() {
     }
 
-    public User(String address, String cep, String cpf, Instant createDate, String email, Long id, String name, String password, Instant updateDate) {
+    public User(String address, String cep, String cpf, Instant createDate, String email, Long id, String name,
+            String password, Instant updateDate) {
         this.address = address;
         this.cep = cep;
         this.cpf = cpf;

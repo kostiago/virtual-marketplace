@@ -5,13 +5,13 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kostiago.backend.entities.Person;
+import com.kostiago.backend.entities.User;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class PersonDTO implements Serializable {
+public class UserDTO implements Serializable {
 
     private Long id;
 
@@ -34,10 +34,10 @@ public class PersonDTO implements Serializable {
 
     private List<PermissionDTO> permissions = new ArrayList<>();
 
-    public PersonDTO() {
+    public UserDTO() {
     }
 
-    public PersonDTO(String address, String cep, String cpf, Instant createDate, String email, Long id, String name,
+    public UserDTO(String address, String cep, String cpf, Instant createDate, String email, Long id, String name,
             Instant updateDate) {
         this.address = address;
         this.cep = cep;
@@ -49,7 +49,7 @@ public class PersonDTO implements Serializable {
         this.updateDate = updateDate;
     }
 
-    public PersonDTO(Person entity) {
+    public UserDTO(User entity) {
         this.address = entity.getAddress();
         this.cep = entity.getCep();
         this.cpf = entity.getCpf();

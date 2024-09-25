@@ -16,39 +16,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.kostiago.backend.dto.PersonDTO;
-import com.kostiago.backend.dto.PersonInsertDTO;
-import com.kostiago.backend.services.PersonService;
+import com.kostiago.backend.dto.UserDTO;
+import com.kostiago.backend.dto.UserInsertDTO;
+import com.kostiago.backend.services.UserService;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/person")
-public class PersonController {
+public class UserController {
 
     @Autowired
-    private PersonService service;
+    private UserService service;
 
     @GetMapping
-    public ResponseEntity<Page<PersonDTO>> findAll(
+    public ResponseEntity<Page<UserDTO>> findAll(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "4") Integer size) {
-        Page<PersonDTO> dto = service.findAllPaged(page, size);
+        Page<UserDTO> dto = service.findAllPaged(page, size);
 
         return ResponseEntity.ok().body(dto);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<PersonDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
 
-        PersonDTO dto = service.findById(id);
+        UserDTO dto = service.findById(id);
         return ResponseEntity.ok().body(dto);
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<PersonDTO> insert(@Valid @RequestBody PersonInsertDTO dto) {
+    public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO dto) {
 
-        PersonDTO newDto = service.insert(dto);
+        UserDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newDto.getId()).toUri();
@@ -57,7 +57,7 @@ public class PersonController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<PersonDTO> update(@PathVariable Long id, @Valid @RequestBody PersonDTO dto) {
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserDTO dto) {
 
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
