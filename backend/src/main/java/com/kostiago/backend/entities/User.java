@@ -2,6 +2,7 @@ package com.kostiago.backend.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -40,6 +41,11 @@ public class User implements Serializable {
     private String address;
     private String cep;
 
+    private String passwordRecoveryCode;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Date dateSendingCode;
+
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE", updatable = false)
     private Instant createDate;
 
@@ -58,7 +64,7 @@ public class User implements Serializable {
     }
 
     public User(String address, String cep, String cpf, Instant createDate, String email, Long id, String name,
-            String password, Instant updateDate) {
+            String password, Instant updateDate, String passwordRecoveryCode, Date dateSendingCode) {
         this.address = address;
         this.cep = cep;
         this.cpf = cpf;
@@ -68,6 +74,9 @@ public class User implements Serializable {
         this.name = name;
         this.password = password;
         this.updateDate = updateDate;
+        this.passwordRecoveryCode = passwordRecoveryCode;
+        this.dateSendingCode = dateSendingCode;
+
     }
 
     @PrePersist
@@ -163,6 +172,22 @@ public class User implements Serializable {
 
     public Set<Permission> getPermissions() {
         return permissions;
+    }
+
+    public String getPasswordRecoveryCode() {
+        return passwordRecoveryCode;
+    }
+
+    public void setPasswordRecoveryCode(String passwordRecoveryCode) {
+        this.passwordRecoveryCode = passwordRecoveryCode;
+    }
+
+    public Date getDateSendingCode() {
+        return dateSendingCode;
+    }
+
+    public void setDateSendingCode(Date dateSendingCode) {
+        this.dateSendingCode = dateSendingCode;
     }
 
     @Override

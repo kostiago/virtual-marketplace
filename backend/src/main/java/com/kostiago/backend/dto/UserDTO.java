@@ -3,6 +3,7 @@ package com.kostiago.backend.dto;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.kostiago.backend.entities.User;
@@ -30,6 +31,9 @@ public class UserDTO implements Serializable {
     private Instant createDate;
     private Instant updateDate;
 
+    private String passwordRecoveryCode;
+    private Date dateSendingCode;
+
     private CityDTO city;
 
     private List<PermissionDTO> permissions = new ArrayList<>();
@@ -37,8 +41,7 @@ public class UserDTO implements Serializable {
     public UserDTO() {
     }
 
-    public UserDTO(String address, String cep, String cpf, Instant createDate, String email, Long id, String name,
-            Instant updateDate) {
+    public UserDTO(String address, String cep, String cpf, Instant createDate, String email, Long id, String name, Instant updateDate, Date dateSendingCode, String passwordRecoveryCode) {
         this.address = address;
         this.cep = cep;
         this.cpf = cpf;
@@ -47,6 +50,8 @@ public class UserDTO implements Serializable {
         this.id = id;
         this.name = name;
         this.updateDate = updateDate;
+        this.dateSendingCode = dateSendingCode;
+        this.passwordRecoveryCode = passwordRecoveryCode;
     }
 
     public UserDTO(User entity) {
@@ -58,6 +63,8 @@ public class UserDTO implements Serializable {
         this.id = entity.getId();
         this.name = entity.getName();
         this.updateDate = entity.getUpdateDate();
+        this.dateSendingCode = entity.getDateSendingCode();
+        this.passwordRecoveryCode = entity.getPasswordRecoveryCode();
 
         if (entity.getCity() != null) {
             this.city = new CityDTO(entity.getCity());
@@ -142,6 +149,22 @@ public class UserDTO implements Serializable {
 
     public List<PermissionDTO> getPermissions() {
         return permissions;
+    }
+
+    public Date getDateSendingCode() {
+        return dateSendingCode;
+    }
+
+    public void setDateSendingCode(Date dateSendingCode) {
+        this.dateSendingCode = dateSendingCode;
+    }
+
+    public String getPasswordRecoveryCode() {
+        return passwordRecoveryCode;
+    }
+
+    public void setPasswordRecoveryCode(String passwordRecoveryCode) {
+        this.passwordRecoveryCode = passwordRecoveryCode;
     }
 
 }
