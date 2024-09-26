@@ -3,6 +3,7 @@ package com.kostiago.backend.services;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -64,8 +65,6 @@ public class UserManagementService {
     }
 
     private String getPasswordRecoveryCode(Long id) {
-
-        DateFormat format = new SimpleDateFormat("ddMMyyyyHHssmm");
-        return format.format(new Date()) + id;
+        return UUID.randomUUID().toString().substring(0, 6).toUpperCase();
     }
 }
