@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kostiago.backend.dto.UserInsertDTO;
+import com.kostiago.backend.dto.UserPasswordRecoveryDTO;
 import com.kostiago.backend.entities.User;
 import com.kostiago.backend.services.UserManagementService;
 
@@ -26,7 +27,7 @@ public class UserManagementController {
     }
 
     @PostMapping("/change-password")
-    public String changePassword(@Valid @RequestBody UserInsertDTO dto) {
+    public String changePassword(@Valid @RequestBody UserPasswordRecoveryDTO dto) {
         return service.changePassword(dto);
     }
 

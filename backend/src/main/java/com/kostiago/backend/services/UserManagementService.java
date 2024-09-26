@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kostiago.backend.dto.UserInsertDTO;
-
+import com.kostiago.backend.dto.UserPasswordRecoveryDTO;
 import com.kostiago.backend.entities.User;
 import com.kostiago.backend.repositories.UserRepository;
 
@@ -31,13 +31,16 @@ public class UserManagementService {
         user.setPasswordRecoveryCode(getPasswordRecoveryCode(user.getId()));
         user.setDateSendingCode(new Date());
 
-        emailService.sendEmailText(user.getEmail(), "Código de Recuperação de Senha", "Olá, '" + user.getName() + "' seu codigo de verificação para recuperação de senha é:" + user.getPasswordRecoveryCode());
+        repository.saveAndFlush(user);
+
+        emailService.sendEmailText(user.getEmail(), "Código de Recuperação de Senha", "Olá, '" + user.getName()
+                + "' seu codigo de verificação para recuperação de senha é:" + user.getPasswordRecoveryCode());
 
         return "Codigo enviando!";
 
     }
 
-    public String changePassword(UserInsertDTO dto) {
+    public String changePassword(UserPasswordRecoveryDTO dto) {
 
         User entity = repository
                 .findByEmailAndPasswordRecoveryCode(dto.getEmail(), dto.getPasswordRecoveryCode());
