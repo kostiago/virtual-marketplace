@@ -1,5 +1,7 @@
 package com.kostiago.backend.services;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,8 +73,17 @@ public class UserService {
         copyDtoToEntity(dto, entity);
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         repository.saveAndFlush(entity);
-        emailService.sendEmailText(entity.getEmail(), "Cadastro na virtual marketplace",
-                "registro na loja foi realizado com sucesso. Em breve você receberá a senha de acesso por e-mail!!");
+        // emailService.sendEmailText(entity.getEmail(), "Cadastro na virtual
+        // marketplace","registro na loja foi realizado com sucesso. Em breve você
+        // receberá a senha de acesso por e-mail!!");
+
+        Map<String, Object> propMap = new HashMap<>();
+
+        propMap.put("name", entity.getName());
+        propMap.put("message", " '" + entity.getName()
+                + "', seu cadastro na loja Cubos foi realizado com sucesso. Em breve você receberá a senha de acesso por e-mail!!");
+
+        emailService.sendEmailTemplate(entity.getEmail(), "Cadastro na virtual marketplace", propMap);
 
         return new UserDTO(entity);
 

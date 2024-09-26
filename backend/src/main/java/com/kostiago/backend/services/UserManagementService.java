@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.kostiago.backend.dto.UserInsertDTO;
 import com.kostiago.backend.dto.UserPasswordRecoveryDTO;
 import com.kostiago.backend.entities.User;
 import com.kostiago.backend.repositories.UserRepository;

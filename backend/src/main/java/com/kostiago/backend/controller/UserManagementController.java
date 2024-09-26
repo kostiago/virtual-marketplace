@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kostiago.backend.dto.UserInsertDTO;
 import com.kostiago.backend.dto.UserPasswordRecoveryDTO;
 import com.kostiago.backend.entities.User;
 import com.kostiago.backend.services.UserManagementService;
