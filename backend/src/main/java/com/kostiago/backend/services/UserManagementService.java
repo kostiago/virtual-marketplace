@@ -1,12 +1,10 @@
 package com.kostiago.backend.services;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kostiago.backend.dto.UserPasswordRecoveryDTO;
@@ -23,7 +21,7 @@ public class UserManagementService {
     private EmailService emailService;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     public String requestCode(String email) {
 

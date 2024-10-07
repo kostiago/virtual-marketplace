@@ -1,7 +1,8 @@
 package com.kostiago.backend.entities;
 
-import java.io.Serializable;
 import java.time.Instant;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,7 +15,7 @@ import lombok.Data;
 @Entity
 @Table(name = "tb_permission")
 @Data
-public class Permission implements Serializable {
+public class Permission implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +29,10 @@ public class Permission implements Serializable {
     private Instant updateDate;
 
     public Permission() {
+    }
+
+    @Override
+    public String getAuthority() {
+        return name;
     }
 }

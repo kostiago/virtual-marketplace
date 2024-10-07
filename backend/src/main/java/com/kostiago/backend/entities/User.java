@@ -1,15 +1,18 @@
 package com.kostiago.backend.entities;
 
-import java.io.Serializable;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,7 +26,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_person")
-public class User implements Serializable {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,7 +59,7 @@ public class User implements Serializable {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "tb_person_permission", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
     Set<Permission> permissions = new HashSet<>();
 
@@ -210,6 +213,16 @@ public class User implements Serializable {
         }
         final User other = (User) obj;
         return Objects.equals(this.id, other.id);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return permissions;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
 }
