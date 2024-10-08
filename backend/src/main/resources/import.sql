@@ -56,38 +56,38 @@ INSERT INTO tb_product (name, short_description, description, price, sale, brand
 
 -- Associando produtos a categorias (Many-to-Many)
 -- Associando produtos a categorias (Many-to-Many)
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (1, 2);  -- Nike Air Max -> Roupas
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (1, 3);  -- Nike Air Max -> Calçados
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (1, 4);  -- Nike Air Max -> Esportes
+INSERT INTO tb_product_category (product_id, category_id) VALUES (1, 2);  -- Nike Air Max -> Roupas
+INSERT INTO tb_product_category (product_id, category_id) VALUES (1, 3);  -- Nike Air Max -> Calçados
+INSERT INTO tb_product_category (product_id, category_id) VALUES (1, 4);  -- Nike Air Max -> Esportes
 
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (2, 2);  -- Adidas Ultraboost -> Roupas
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (2, 3);  -- Adidas Ultraboost -> Calçados
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (2, 4);  -- Adidas Ultraboost -> Esportes
+INSERT INTO tb_product_category (product_id, category_id) VALUES (2, 2);  -- Adidas Ultraboost -> Roupas
+INSERT INTO tb_product_category (product_id, category_id) VALUES (2, 3);  -- Adidas Ultraboost -> Calçados
+INSERT INTO tb_product_category (product_id, category_id) VALUES (2, 4);  -- Adidas Ultraboost -> Esportes
 
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (3, 1);  -- iPhone 13 -> Eletrônicos
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (3, 6);  -- iPhone 13 -> Celulares
+INSERT INTO tb_product_category (product_id, category_id) VALUES (3, 1);  -- iPhone 13 -> Eletrônicos
+INSERT INTO tb_product_category (product_id, category_id) VALUES (3, 6);  -- iPhone 13 -> Celulares
 
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (4, 1);  -- Galaxy S21 -> Eletrônicos
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (4, 6);  -- Galaxy S21 -> Celulares
+INSERT INTO tb_product_category (product_id, category_id) VALUES (4, 1);  -- Galaxy S21 -> Eletrônicos
+INSERT INTO tb_product_category (product_id, category_id) VALUES (4, 6);  -- Galaxy S21 -> Celulares
 
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (5, 1);  -- PlayStation 5 -> Eletrônicos
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (5, 8);  -- PlayStation 5 -> Eletrodomésticos
+INSERT INTO tb_product_category (product_id, category_id) VALUES (5, 1);  -- PlayStation 5 -> Eletrônicos
+INSERT INTO tb_product_category (product_id, category_id) VALUES (5, 8);  -- PlayStation 5 -> Eletrodomésticos
 
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (6, 1);  -- Xbox Series X -> Eletrônicos
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (6, 8);  -- Xbox Series X -> Eletrodomésticos
+INSERT INTO tb_product_category (product_id, category_id) VALUES (6, 1);  -- Xbox Series X -> Eletrônicos
+INSERT INTO tb_product_category (product_id, category_id) VALUES (6, 8);  -- Xbox Series X -> Eletrodomésticos
 
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (7, 2);  -- Puma Running Shoes -> Roupas
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (7, 3);  -- Puma Running Shoes -> Calçados
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (7, 4);  -- Puma Running Shoes -> Esportes
+INSERT INTO tb_product_category (product_id, category_id) VALUES (7, 2);  -- Puma Running Shoes -> Roupas
+INSERT INTO tb_product_category (product_id, category_id) VALUES (7, 3);  -- Puma Running Shoes -> Calçados
+INSERT INTO tb_product_category (product_id, category_id) VALUES (7, 4);  -- Puma Running Shoes -> Esportes
 
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (8, 1);  -- Asus ZenBook -> Eletrônicos
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (8, 5);  -- Asus ZenBook -> Computadores
+INSERT INTO tb_product_category (product_id, category_id) VALUES (8, 1);  -- Asus ZenBook -> Eletrônicos
+INSERT INTO tb_product_category (product_id, category_id) VALUES (8, 5);  -- Asus ZenBook -> Computadores
 
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (9, 5);  -- Dell XPS 13 -> Computadores
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (9, 1);  -- Dell XPS 13 -> Eletrônicos
+INSERT INTO tb_product_category (product_id, category_id) VALUES (9, 5);  -- Dell XPS 13 -> Computadores
+INSERT INTO tb_product_category (product_id, category_id) VALUES (9, 1);  -- Dell XPS 13 -> Eletrônicos
 
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (10, 5); -- HP Spectre x360 -> Computadores
-INSERT INTO tb_product_category (tb_product_id, tb_category_id) VALUES (10, 1); -- HP Spectre x360 -> Eletrônicos
+INSERT INTO tb_product_category (product_id, category_id) VALUES (10, 5); -- HP Spectre x360 -> Computadores
+INSERT INTO tb_product_category (product_id, category_id) VALUES (10, 1); -- HP Spectre x360 -> Eletrônicos
 
 -- Inserindo Pessoas na tabela tb_person
 INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('João Silva', '123.456.789-00', 'costatiago055@gmail.com', 'senha123', 'Rua das Flores, 123', '12345-678', NOW(), NOW(), 1);
