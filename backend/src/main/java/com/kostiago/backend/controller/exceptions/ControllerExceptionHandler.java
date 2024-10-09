@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.kostiago.backend.services.exceptions.AlreadyRegisteredException;
+import com.kostiago.backend.services.exceptions.DatabaseException;
 import com.kostiago.backend.services.exceptions.InvalidAcronymException;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
 
@@ -49,8 +50,8 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(status).body(error);
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<StandardError> database(DataIntegrityViolationException e, HttpServletRequest request) {
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request) {
 
         HttpStatus status = HttpStatus.BAD_REQUEST;
         StandardError error = new StandardError();

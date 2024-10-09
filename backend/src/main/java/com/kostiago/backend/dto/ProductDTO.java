@@ -17,17 +17,22 @@ public class ProductDTO implements Serializable {
 
     private Integer id;
 
-    @Size(min = 5, max = 60, message = "Nome deve ter entre 5 e 60 caracteres")
-    @NotBlank
+    @Size(min = 5, max = 60, message = "Nome deve ter entre 5 e 60 caracteres!")
+    @NotBlank(message = "O campo nome é obrigatorio.")
     private String name;
 
+    @Size(min = 10, max = 30, message = "Nome deve ter entre 5 e 60 caracteres!")
+    @NotBlank(message = "O campo nome é obrigatorio")
     private String shortDescription;
+
+    @Size(min = 10, message = "A descrição deve ter no minimo 10 caracteres!")
+    @NotBlank(message = "O campo descrição é obrigatorio.")
     private String description;
 
-    @Positive(message = "Preço deve ser maior que zero")
+    @Positive(message = "Preço deve ser maior que zero.")
     private Double price;
 
-    @Positive(message = "Preço de venda deve ser maior que zero")
+    @Positive(message = "Preço de venda deve ser maior que zero.")
     private Double sale;
 
     private Instant createDate;

@@ -5,9 +5,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kostiago.backend.dto.CategoryDTO;
@@ -37,12 +37,10 @@ public class ProductService {
     private BrandRepository brandRepository;
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAllPaged(Integer page, Integer size) {
+    public Page<ProductDTO> findAllPaged(Pageable pageable) {
 
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Product> list = repository.findAll(pageable);
-
-        return list.map(prod -> new ProductDTO(prod));
+        Page<Product> result = repository.findAll(pageable);
+        return result.map(prod -> new ProductDTO(prod));
 
     }
 
@@ -89,7 +87,7 @@ public class ProductService {
         }
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id) {
 
         // Verifica se o produto existe
@@ -102,7 +100,7 @@ public class ProductService {
         try {
             repository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new DatabaseException("Violação de Integridade" + e.getMessage());
+            throw new DatabaseException("Falha de integridade referencial");
         }
 
     }
