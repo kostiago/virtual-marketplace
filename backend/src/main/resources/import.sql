@@ -55,7 +55,6 @@ INSERT INTO tb_product (name, short_description, description, price, sale, brand
 -- Inserindo cidades na tabela tb_product_category
 
 -- Associando produtos a categorias (Many-to-Many)
--- Associando produtos a categorias (Many-to-Many)
 INSERT INTO tb_product_category (product_id, category_id) VALUES (1, 2);  -- Nike Air Max -> Roupas
 INSERT INTO tb_product_category (product_id, category_id) VALUES (1, 3);  -- Nike Air Max -> Calçados
 INSERT INTO tb_product_category (product_id, category_id) VALUES (1, 4);  -- Nike Air Max -> Esportes
@@ -89,17 +88,32 @@ INSERT INTO tb_product_category (product_id, category_id) VALUES (9, 1);  -- Del
 INSERT INTO tb_product_category (product_id, category_id) VALUES (10, 5); -- HP Spectre x360 -> Computadores
 INSERT INTO tb_product_category (product_id, category_id) VALUES (10, 1); -- HP Spectre x360 -> Eletrônicos
 
+
+
+
 -- Inserindo Pessoas na tabela tb_person
-INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('João Silva', '123.456.789-00', 'costatiago055@gmail.com', 'senha123', 'Rua das Flores, 123', '12345-678', NOW(), NOW(), 1);
+INSERT INTO tb_user (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('João Silva', '123.456.789-00', 'costatiago055@gmail.com', 'senha123', 'Rua das Flores, 123', '12345-678', NOW(), NOW(), 1);
 
-INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Maria Oliveira', '987.654.321-00', 'maria.oliveira@email.com', 'senha456', 'Av. Paulista, 456', '98765-432', NOW(), NOW(), 2);
+INSERT INTO tb_user (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Maria Oliveira', '987.654.321-00', 'maria.oliveira@email.com', 'senha456', 'Av. Paulista, 456', '98765-432', NOW(), NOW(), 2);
 
-INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Carlos Souza', '111.222.333-44', 'carlos.souza@email.com', 'senha789', 'Rua da Praia, 789', '12345-987', NOW(), NOW(), 3);
+INSERT INTO tb_user (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Carlos Souza', '111.222.333-44', 'carlos.souza@email.com', 'senha789', 'Rua da Praia, 789', '12345-987', NOW(), NOW(), 3);
 
-INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Ana Costa', '555.666.777-88', 'ana.costa@email.com', 'senhaABC', 'Rua Central, 101', '67890-123', NOW(), NOW(), 4);
+INSERT INTO tb_user (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Ana Costa', '555.666.777-88', 'ana.costa@email.com', 'senhaABC', 'Rua Central, 101', '67890-123', NOW(), NOW(), 4);
 
-INSERT INTO tb_person (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Paulo Mendes', '999.888.777-66', 'paulo.mendes@email.com', 'senhaDEF', 'Rua dos Pinheiros, 202', '54321-098', NOW(), NOW(), 5);
+INSERT INTO tb_user (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Paulo Mendes', '999.888.777-66', 'paulo.mendes@email.com', 'senhaDEF', 'Rua dos Pinheiros, 202', '54321-098', NOW(), NOW(), 5);
 
+-- Inserindo Pedido na tabela tb_order
+INSERT INTO tb_order(moment, status, client_id) VALUES (NOW(), 1,1);
+
+INSERT INTO tb_order(moment, status, client_id) VALUES (NOW(), 3,2);
+
+INSERT INTO tb_order(moment, status, client_id) VALUES (NOW(), 0,1);
+
+-- Inserindo Item do Pedido na tabela tb_order_item
+INSERT INTO tb_order_item(order_id, product_id, quantity, price) VALUES (1, 1, 2, 90.5);
+
+-- Inserindo Pagamentos na tabela tb_payment
+INSERT INTO tb_payment (order_id, moment) VALUES (1, TIMESTAMP WITH TIME ZONE '2024-07-25T15:00:00Z');
 
 -- Inserindo Permissões na tabela tb_permission
 INSERT INTO tb_permission (name, create_date, update_date) VALUES ('ROLE_USER', NOW(), NOW()), ('ROLE_OPERATOR', NOW(), NOW()), ('ROLER_ADMIN', NOW(), NOW());

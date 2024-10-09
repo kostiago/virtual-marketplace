@@ -3,6 +3,7 @@ package com.kostiago.backend.entities;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.kostiago.backend.entities.enums.OrderStatus;
@@ -98,6 +99,10 @@ public class Order implements Serializable {
         return items;
     }
 
+    public List<Product> getProducts() {
+        return items.stream().map(orderItem -> orderItem.getProduct()).toList();
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -108,18 +113,23 @@ public class Order implements Serializable {
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         final Order other = (Order) obj;
         if (id == null) {
-            if (other.id != null)
+            if (other.id != null) {
                 return false;
-        } else if (!id.equals(other.id))
+            }
+        } else if (!id.equals(other.id)) {
             return false;
+        }
         return true;
     }
 

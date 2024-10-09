@@ -3,6 +3,7 @@ package com.kostiago.backend.entities;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -147,6 +148,10 @@ public class Product implements Serializable {
 
     public Set<OrderItem> getItems() {
         return items;
+    }
+
+    public List<Order> getOrders() {
+        return items.stream().map(orderItem -> orderItem.getOrder()).toList();
     }
 
 }
