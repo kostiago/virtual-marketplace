@@ -1,5 +1,7 @@
 package com.kostiago.backend.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kostiago.backend.dto.CategoryDTO;
+import com.kostiago.backend.dto.ProductDTO;
 import com.kostiago.backend.entities.Category;
+import com.kostiago.backend.entities.Product;
 import com.kostiago.backend.repositories.CategoryRepository;
 import com.kostiago.backend.services.exceptions.AlreadyRegisteredException;
 import com.kostiago.backend.services.exceptions.DatabaseException;
@@ -23,7 +27,7 @@ import jakarta.persistence.EntityNotFoundException;
 public class CategoryService {
 
     @Autowired
-    private CategoryRepository repository; 
+    private CategoryRepository repository;
 
     @Transactional(readOnly = true)
     public Page<CategoryDTO> findAllPaged(Integer page, Integer size) {
@@ -32,6 +36,14 @@ public class CategoryService {
         Page<Category> list = repository.findAll(pageable);
 
         return list.map(cat -> new CategoryDTO(cat));
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductDTO> findProductsByCategory(Long id) {
+        Optional<Category> result = repository.findById(id);
+        List<Product> products = new ArrayList<>(result.get().getProducts());
+        return products.stream().map(x -> new ProductDTO(x)).toList();
+
     }
 
     @Transactional(readOnly = true)

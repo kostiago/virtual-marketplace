@@ -1,5 +1,7 @@
 package com.kostiago.backend.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +39,9 @@ public class ProductService {
     private BrandRepository brandRepository;
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAllPaged(Pageable pageable) {
+    public Page<ProductDTO> findAllPaged(String name, Pageable pageable) {
 
-        Page<Product> result = repository.findAll(pageable);
+        Page<Product> result = repository.searchByName(name, pageable);
         return result.map(prod -> new ProductDTO(prod));
 
     }

@@ -66,7 +66,7 @@ public class User implements UserDetails {
 
     @ManyToMany
     @JoinTable(name = "tb_person_permission", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    Set<Permission> permissions = new HashSet<>();
+    private Set<Permission> permissions = new HashSet<>();
 
     public User() {
     }
@@ -200,6 +200,20 @@ public class User implements UserDetails {
 
     public void setDateSendingCode(Date dateSendingCode) {
         this.dateSendingCode = dateSendingCode;
+    }
+
+    public void addPermission(Permission permission) {
+        permissions.add(permission);
+    }
+
+    public boolean hasPermission(String permissionName) {
+        for (Permission permission : permissions) {
+            if (permission.getAuthority().equals(permissionName)) {
+                return true;
+            }
+
+        }
+        return false;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.kostiago.backend.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,13 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kostiago.backend.dto.CategoryDTO;
+import com.kostiago.backend.dto.ProductDTO;
 import com.kostiago.backend.services.CategoryService;
 
 @RestController
 @RequestMapping("/api/category")
 public class CategoryController {
 
-    @Autowired 
+    @Autowired
     private CategoryService service;
 
     @GetMapping
@@ -39,6 +41,12 @@ public class CategoryController {
     public ResponseEntity<CategoryDTO> findById(@PathVariable Long id) {
 
         CategoryDTO dto = service.findById(id);
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @GetMapping(value = "/{id}/products")
+    public ResponseEntity<List<ProductDTO>> findProductsByCategory(@PathVariable Long id) {
+        List<ProductDTO> dto = service.findProductsByCategory(id);
         return ResponseEntity.ok().body(dto);
     }
 
