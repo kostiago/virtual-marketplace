@@ -43,7 +43,7 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "id.order")
     private final Set<OrderItem> items = new HashSet<>();
 
-    private Order() {
+    public Order() {
     }
 
     public Order(final Long id, final Instant moment, final OrderStatus status, final User client,

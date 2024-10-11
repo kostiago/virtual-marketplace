@@ -26,7 +26,7 @@ public class Payment {
     @MapsId
     private Order order;
 
-    private Payment() {
+    public Payment() {
     }
 
     public Payment(Long id, Instant moment, Order order) {
