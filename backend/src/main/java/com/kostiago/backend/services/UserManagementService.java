@@ -25,7 +25,7 @@ public class UserManagementService {
 
     public String requestCode(String email) {
 
-        User user = repository.findByEmail(email);
+        User user = repository.findByEmail(email).get();
         user.setPasswordRecoveryCode(getPasswordRecoveryCode(user.getId()));
         user.setDateSendingCode(new Date());
 
