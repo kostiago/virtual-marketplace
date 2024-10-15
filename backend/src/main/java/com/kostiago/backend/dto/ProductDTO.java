@@ -16,7 +16,7 @@ import jakarta.validation.constraints.Size;
 
 public class ProductDTO implements Serializable {
 
-    private Integer id;
+    private Long id;
 
     @Size(min = 5, max = 60, message = "Nome deve ter entre 5 e 60 caracteres!")
     @NotBlank(message = "O campo nome é obrigatorio.")
@@ -51,7 +51,7 @@ public class ProductDTO implements Serializable {
     public ProductDTO() {
     }
 
-    public ProductDTO(Instant createDate, String description, Integer id, String name, Double price,
+    public ProductDTO(Instant createDate, String description, Long id, String name, Double price,
             Double sale, String shortDescription, Instant updateDate) {
 
         this.createDate = createDate;
@@ -91,11 +91,11 @@ public class ProductDTO implements Serializable {
         images.forEach(img -> this.images.add(new ProductImageDTO(img)));
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

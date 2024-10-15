@@ -8,7 +8,7 @@ import com.kostiago.backend.entities.ProductImage;
 
 public class ProductMinDTO implements Serializable {
 
-    private Integer id;
+    private Long id;
 
     private String name;
 
@@ -19,7 +19,7 @@ public class ProductMinDTO implements Serializable {
     public ProductMinDTO() {
     }
 
-    public ProductMinDTO(Integer id, String name, Double sale, String imageName) {
+    public ProductMinDTO(Long id, String name, Double sale, String imageName) {
 
         this.id = id;
         this.name = name;
@@ -44,11 +44,11 @@ public class ProductMinDTO implements Serializable {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
