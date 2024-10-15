@@ -10,8 +10,6 @@ public class ProductImageDTO implements Serializable {
 
     private String name;
 
-    private ProductDTO product;
-
     public ProductImageDTO() {
     }
 
@@ -25,9 +23,6 @@ public class ProductImageDTO implements Serializable {
         this.id = entity.getId();
         this.name = entity.getName();
 
-        if (entity.getProduct() != null) {
-            this.product = new ProductDTO(entity.getProduct());
-        }
     }
 
     public Long getId() {
@@ -44,14 +39,6 @@ public class ProductImageDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public ProductDTO getProduct() {
-        return product;
-    }
-
-    public void setProduct(ProductDTO product) {
-        this.product = product;
     }
 
 }

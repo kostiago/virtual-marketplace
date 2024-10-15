@@ -54,6 +54,9 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "id.product")
     private Set<OrderItem> items = new HashSet<>();
 
+    @OneToMany(mappedBy = "product")
+    private Set<ProductImage> images = new HashSet<>();
+
     public Product() {
     }
 
@@ -152,6 +155,10 @@ public class Product implements Serializable {
 
     public List<Order> getOrders() {
         return items.stream().map(orderItem -> orderItem.getOrder()).toList();
+    }
+
+    public Set<ProductImage> getImages() {
+        return images;
     }
 
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kostiago.backend.dto.ProductDTO;
+import com.kostiago.backend.dto.ProductMinDTO;
 import com.kostiago.backend.services.ProductService;
 
 import jakarta.validation.Valid;
@@ -35,6 +36,14 @@ public class ProductController {
             @RequestParam(name = "name", defaultValue = "") String name,
             Pageable pageable) {
         Page<ProductDTO> dto = service.findAllPaged(name, pageable);
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @GetMapping("/min")
+    public ResponseEntity<Page<ProductMinDTO>> findAllMinPaged(
+            @RequestParam(name = "name", defaultValue = "") String name,
+            Pageable pageable) {
+        Page<ProductMinDTO> dto = service.findAllMinPaged(name, pageable);
         return ResponseEntity.ok().body(dto);
     }
 

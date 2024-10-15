@@ -12,9 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kostiago.backend.dto.CategoryDTO;
 import com.kostiago.backend.dto.ProductDTO;
+import com.kostiago.backend.dto.ProductImageDTO;
+import com.kostiago.backend.dto.ProductMinDTO;
 import com.kostiago.backend.entities.Brand;
 import com.kostiago.backend.entities.Category;
 import com.kostiago.backend.entities.Product;
+import com.kostiago.backend.entities.ProductImage;
 import com.kostiago.backend.repositories.BrandRepository;
 import com.kostiago.backend.repositories.CategoryRepository;
 import com.kostiago.backend.repositories.ProductRepository;
@@ -45,12 +48,18 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
+    public Page<ProductMinDTO> findAllMinPaged(String name, Pageable pageable) {
+        Page<Product> result = repository.searchByName(name, pageable);
+        return result.map(prodMin -> new ProductMinDTO(prodMin));
+    }
+
+    @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
 
         Optional<Product> object = repository.findById(id);
         Product entity = object.orElseThrow(() -> new ResourceNotFoundExeception("Produto não encontrado"));
 
-        return new ProductDTO(entity, entity.getCategories());
+        return new ProductDTO(entity, entity.getCategories(), entity.getImages());
     }
 
     @Transactional
@@ -132,6 +141,14 @@ public class ProductService {
             System.err.println("estou aqui");
             Category cat = categoryRepository.getReferenceById(catDTO.getId());
             entity.getCategories().add(cat);
+        }
+
+        entity.getImages().clear();
+        for (ProductImageDTO imgDTO : dto.getImages()) {
+            ProductImage img = new ProductImage();
+            img.setName(imgDTO.getName());
+            img.setProduct(entity);
+            entity.getImages().add(img);
         }
     }
 

@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.kostiago.backend.entities.Category;
 import com.kostiago.backend.entities.Product;
+import com.kostiago.backend.entities.ProductImage;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -44,6 +45,9 @@ public class ProductDTO implements Serializable {
     // Atributo para o relacionamento ManyToMany com Category
     private List<CategoryDTO> categories = new ArrayList<>();
 
+    // Atributo para o relacionamento ManyToMany com ProductImage
+    private List<ProductImageDTO> images = new ArrayList<>();
+
     public ProductDTO() {
     }
 
@@ -77,12 +81,14 @@ public class ProductDTO implements Serializable {
         }
     }
 
-    public ProductDTO(Product entity, Set<Category> categories) {
+    public ProductDTO(Product entity, Set<Category> categories, Set<ProductImage> images) {
 
         this(entity);
 
         // ManyToMany: Convertendo as entidades Category em CategoryDTO
         categories.forEach(cat -> this.categories.add(new CategoryDTO(cat)));
+
+        images.forEach(img -> this.images.add(new ProductImageDTO(img)));
     }
 
     public Integer getId() {
@@ -163,6 +169,14 @@ public class ProductDTO implements Serializable {
 
     public void setCategories(List<CategoryDTO> categories) {
         this.categories = categories;
+    }
+
+    public List<ProductImageDTO> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ProductImageDTO> images) {
+        this.images = images;
     }
 
 }
