@@ -5,6 +5,7 @@ import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.kostiago.backend.dto.UserDTO;
 import com.kostiago.backend.dto.UserInsertDTO;
 import com.kostiago.backend.dto.UserUpdateDTO;
+import com.kostiago.backend.services.UserDetailService;
 import com.kostiago.backend.services.UserService;
 
 import jakarta.validation.Valid;
@@ -30,12 +32,22 @@ public class UserController {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private UserDetailService userDetailService;
+
     @GetMapping
     public ResponseEntity<Page<UserDTO>> findAll(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "4") Integer size) {
         Page<UserDTO> dto = service.findAllPaged(page, size);
 
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @PreAuthorize("hasAnyRole( 'ROLE_USER','ROLE_OPERATOR','ROLE_ADMIN')")
+    @GetMapping(value = "/users/{me}")
+    public ResponseEntity<UserDTO> getMe() {
+        UserDTO dto = userDetailService.getMe();
         return ResponseEntity.ok().body(dto);
     }
 

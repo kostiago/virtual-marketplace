@@ -23,7 +23,6 @@ import com.kostiago.backend.entities.User;
 import com.kostiago.backend.repositories.CityRepository;
 import com.kostiago.backend.repositories.PermissionRepository;
 import com.kostiago.backend.repositories.UserRepository;
-
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
 
 import jakarta.persistence.EntityNotFoundException;

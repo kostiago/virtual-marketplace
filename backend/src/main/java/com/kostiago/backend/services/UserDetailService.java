@@ -3,7 +3,6 @@ package com.kostiago.backend.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.kostiago.backend.dto.UserDTO;
 import com.kostiago.backend.entities.Permission;
 import com.kostiago.backend.entities.User;
 import com.kostiago.backend.projections.UserDetailProjection;
@@ -27,7 +28,7 @@ public class UserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         List<UserDetailProjection> result = repository.searchUserAndRolesByEmail(username);
-        if (result.size() == 0) {
+        if (result.isEmpty()) {
             throw new UsernameNotFoundException("User not found");
         }
 
@@ -55,4 +56,9 @@ public class UserDetailService implements UserDetailsService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public UserDTO getMe() {
+        User user = authenticated();
+        return new UserDTO(user);
+    }
 }
