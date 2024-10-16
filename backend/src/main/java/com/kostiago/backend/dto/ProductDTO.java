@@ -11,6 +11,7 @@ import com.kostiago.backend.entities.Product;
 import com.kostiago.backend.entities.ProductImage;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
@@ -40,9 +41,11 @@ public class ProductDTO implements Serializable {
     private Instant updateDate;
 
     // Atributo para o relacionamento ManyToOne com Brand
+
     private BrandDTO brand;
 
     // Atributo para o relacionamento ManyToMany com Category
+
     private List<CategoryDTO> categories = new ArrayList<>();
 
     // Atributo para o relacionamento ManyToMany com ProductImage

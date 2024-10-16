@@ -8,6 +8,8 @@ import com.kostiago.backend.entities.Order;
 import com.kostiago.backend.entities.OrderItem;
 import com.kostiago.backend.entities.enums.OrderStatus;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class OrderDTO {
 
     private Long id;
@@ -17,6 +19,7 @@ public class OrderDTO {
     private ClientDTO client;
     private PaymentDTO payment;
 
+    @NotEmpty(message = "É necessario ter pelo menos um item associad!")
     private List<OrderItemDTO> items = new ArrayList<>();
 
     public OrderDTO() {
