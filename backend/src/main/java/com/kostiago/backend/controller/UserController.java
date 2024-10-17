@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO dto) {
+    public ResponseEntity<UserDTO> insert(@RequestBody UserInsertDTO dto) {
 
         UserDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder

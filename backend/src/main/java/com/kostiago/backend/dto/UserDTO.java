@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.kostiago.backend.entities.User;
+import com.kostiago.backend.entities.enums.UserSituation;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -34,6 +35,8 @@ public class UserDTO implements Serializable {
     private String passwordRecoveryCode;
     private Date dateSendingCode;
 
+    private UserSituation situation;
+
     private CityDTO city;
 
     private List<PermissionDTO> permissions = new ArrayList<>();
@@ -41,7 +44,8 @@ public class UserDTO implements Serializable {
     public UserDTO() {
     }
 
-    public UserDTO(String address, String cep, String cpf, Instant createDate, String email, Long id, String name, Instant updateDate, Date dateSendingCode, String passwordRecoveryCode) {
+    public UserDTO(String address, String cep, String cpf, Instant createDate, String email, Long id, String name,
+            Instant updateDate, Date dateSendingCode, String passwordRecoveryCode) {
         this.address = address;
         this.cep = cep;
         this.cpf = cpf;
@@ -65,6 +69,7 @@ public class UserDTO implements Serializable {
         this.updateDate = entity.getUpdateDate();
         this.dateSendingCode = entity.getDateSendingCode();
         this.passwordRecoveryCode = entity.getPasswordRecoveryCode();
+        this.situation = entity.getSituation();
 
         if (entity.getCity() != null) {
             this.city = new CityDTO(entity.getCity());
@@ -165,6 +170,14 @@ public class UserDTO implements Serializable {
 
     public void setPasswordRecoveryCode(String passwordRecoveryCode) {
         this.passwordRecoveryCode = passwordRecoveryCode;
+    }
+
+    public UserSituation getSituation() {
+        return situation;
+    }
+
+    public void setSituation(UserSituation situation) {
+        this.situation = situation;
     }
 
 }

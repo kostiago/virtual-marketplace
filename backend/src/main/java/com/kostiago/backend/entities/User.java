@@ -12,8 +12,12 @@ import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.kostiago.backend.entities.enums.UserSituation;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -56,6 +60,9 @@ public class User implements UserDetails {
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updateDate;
+
+    @Enumerated(EnumType.STRING)
+    private UserSituation situation;
 
     @ManyToOne
     @JoinColumn(name = "city_id")
@@ -200,6 +207,14 @@ public class User implements UserDetails {
 
     public void setDateSendingCode(Date dateSendingCode) {
         this.dateSendingCode = dateSendingCode;
+    }
+
+    public UserSituation getSituation() {
+        return situation;
+    }
+
+    public void setSituation(UserSituation situation) {
+        this.situation = situation;
     }
 
     public void addPermission(Permission permission) {

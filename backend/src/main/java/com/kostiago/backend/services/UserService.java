@@ -20,6 +20,7 @@ import com.kostiago.backend.dto.UserUpdateDTO;
 import com.kostiago.backend.entities.City;
 import com.kostiago.backend.entities.Permission;
 import com.kostiago.backend.entities.User;
+import com.kostiago.backend.entities.enums.UserSituation;
 import com.kostiago.backend.repositories.CityRepository;
 import com.kostiago.backend.repositories.PermissionRepository;
 import com.kostiago.backend.repositories.UserRepository;
@@ -76,16 +77,27 @@ public class UserService {
         // marketplace","registro na loja foi realizado com sucesso. Em breve você
         // receberá a senha de acesso por e-mail!!");
 
-        Map<String, Object> propMap = new HashMap<>();
-
-        propMap.put("name", entity.getName());
-        propMap.put("message", " '" + entity.getName()
-                + "', seu cadastro na loja Cubos foi realizado com sucesso. Em breve você receberá a senha de acesso por e-mail!!");
-
-        emailService.sendEmailTemplate(entity.getEmail(), "Cadastro na virtual marketplace", propMap);
-
         return new UserDTO(entity);
 
+    }
+
+    @Transactional
+    public UserDTO signup(UserInsertDTO dto) {
+        User entity = new User();
+        copyDtoToEntity(dto, entity);
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+        entity.setSituation(UserSituation.PENDENTE);
+        entity.setId(null);
+        repository.saveAndFlush(entity);
+
+        System.out.println("E-mail do usuário: " + entity.getEmail());
+
+        emailService.sendEmailText(entity.getEmail(), "Cadastro na loja Cubos", "Olá, '" + entity.getName()
+                + "' seu cadastro na loja Cubos foi realizado com sucesso. Em breve você receberá a senha de acesso por e-mail!!"
+                + entity.getPasswordRecoveryCode());
+
+        System.out.println("E-mail enviado com sucesso!");
+        return new UserDTO(entity);
     }
 
     @Transactional

@@ -92,7 +92,7 @@ INSERT INTO tb_product_category (product_id, category_id) VALUES (10, 1); -- HP 
 
 
 -- Inserindo Pessoas na tabela tb_person
-INSERT INTO tb_user (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Tiago Costa', '123.456.789-00', 'costatiago055@gmail.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', 'Rua das Flores, 123', '12345-678', NOW(), NOW(), 1);
+INSERT INTO tb_user (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Tiago Costa', '123.456.789-00', 'csostatiago055@gmail.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', 'Rua das Flores, 123', '12345-678', NOW(), NOW(), 1);
 
 INSERT INTO tb_user (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Maria Oliveira', '987.654.321-00', 'maria.oliveira@email.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', 'Av. Paulista, 456', '98765-432', NOW(), NOW(), 2);
 
