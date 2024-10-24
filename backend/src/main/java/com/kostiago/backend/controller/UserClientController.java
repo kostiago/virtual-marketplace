@@ -17,9 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.kostiago.backend.dto.UserClientRequestDTO;
 import com.kostiago.backend.dto.UserDTO;
-
+import com.kostiago.backend.dto.UserInsertDTO;
 import com.kostiago.backend.services.UserClientService;
 import com.kostiago.backend.services.UserDetailService;
 
@@ -41,7 +40,7 @@ public class UserClientController {
     }
 
     @PostMapping(value = "sign-up")
-    public ResponseEntity<UserDTO> signup(@RequestBody UserClientRequestDTO dto) {
+    public ResponseEntity<UserDTO> signup(@RequestBody UserInsertDTO dto) {
 
         UserDTO newDto = service.signup(dto);
 

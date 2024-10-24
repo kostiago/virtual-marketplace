@@ -1,10 +1,10 @@
 package com.kostiago.backend.services;
 
 import java.io.BufferedReader;
-import java.io.IOException;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
+
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Optional;
@@ -67,7 +67,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO insert(UserInsertDTO dto) throws Exception {
+    public UserDTO insert(UserInsertDTO dto) {
 
         // Cria uma nova Pessoa
         User entity = new User();
@@ -75,9 +75,6 @@ public class UserService {
 
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         repository.saveAndFlush(entity);
-        // emailService.sendEmailText(entity.getEmail(), "Cadastro na virtual
-        // marketplace","registro na loja foi realizado com sucesso. Em breve você
-        // receberá a senha de acesso por e-mail!!");
 
         return new UserDTO(entity);
 
@@ -139,9 +136,6 @@ public class UserService {
 
     /**
      * METODO AUXILIAR
-     *
-     * @param dto
-     * @param entity
      */
     private void copyDtoToEntity(UserDTO dto, User entity) {
         entity.setName(dto.getName());
