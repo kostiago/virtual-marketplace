@@ -26,9 +26,14 @@ public class UserDTO implements Serializable {
     @Email(message = "Informe um email válido")
     private String email;
 
-    private String address;
-
     private String cep;
+
+    private String logradouro;
+    private String complemento;
+    private String bairro;
+    private String localidade;
+    private String uf;
+
     private Instant createDate;
     private Instant updateDate;
 
@@ -37,16 +42,15 @@ public class UserDTO implements Serializable {
 
     private UserSituation situation;
 
-    private CityDTO city;
-
     private List<PermissionDTO> permissions = new ArrayList<>();
 
     public UserDTO() {
     }
 
-    public UserDTO(String address, String cep, String cpf, Instant createDate, String email, Long id, String name,
-            Instant updateDate, Date dateSendingCode, String passwordRecoveryCode) {
-        this.address = address;
+    public UserDTO(String cep, String cpf, Instant createDate, String email, Long id, String name,
+            Instant updateDate, Date dateSendingCode, String passwordRecoveryCode, String logradouro,
+            String complemento, String bairro, String localidade, String uf) {
+
         this.cep = cep;
         this.cpf = cpf;
         this.createDate = createDate;
@@ -56,10 +60,16 @@ public class UserDTO implements Serializable {
         this.updateDate = updateDate;
         this.dateSendingCode = dateSendingCode;
         this.passwordRecoveryCode = passwordRecoveryCode;
+
+        this.logradouro = logradouro;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.localidade = localidade;
+        this.uf = uf;
     }
 
     public UserDTO(User entity) {
-        this.address = entity.getAddress();
+
         this.cep = entity.getCep();
         this.cpf = entity.getCpf();
         this.createDate = entity.getCreateDate();
@@ -71,9 +81,11 @@ public class UserDTO implements Serializable {
         this.passwordRecoveryCode = entity.getPasswordRecoveryCode();
         this.situation = entity.getSituation();
 
-        if (entity.getCity() != null) {
-            this.city = new CityDTO(entity.getCity());
-        }
+        this.logradouro = entity.getLogradouro();
+        this.complemento = entity.getComplemento();
+        this.bairro = entity.getBairro();
+        this.localidade = entity.getLocalidade();
+        this.uf = entity.getUf();
 
         entity.getPermissions()
                 .forEach(personPermission -> this.permissions.add(new PermissionDTO(personPermission)));
@@ -112,20 +124,52 @@ public class UserDTO implements Serializable {
         this.email = email;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getCep() {
         return cep;
     }
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getLocalidade() {
+        return localidade;
+    }
+
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
     }
 
     public Instant getCreateDate() {
@@ -142,14 +186,6 @@ public class UserDTO implements Serializable {
 
     public void setUpdateDate(Instant updateDate) {
         this.updateDate = updateDate;
-    }
-
-    public CityDTO getCity() {
-        return city;
-    }
-
-    public void setCity(CityDTO city) {
-        this.city = city;
     }
 
     public List<PermissionDTO> getPermissions() {

@@ -11,7 +11,6 @@ import com.kostiago.backend.entities.Product;
 import com.kostiago.backend.entities.ProductImage;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 

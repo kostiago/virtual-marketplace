@@ -19,8 +19,6 @@ public class UserClientRequestDTO {
 
     private UserSituation situation;
 
-    private CityDTO city;
-
     public UserClientRequestDTO() {
     }
 
@@ -44,7 +42,6 @@ public class UserClientRequestDTO {
         this.name = entity.getName();
         this.cpf = entity.getCpf();
         this.email = entity.getEmail();
-        this.address = entity.getAddress();
         this.cep = entity.getCep();
 
         this.situation = entity.getSituation();
@@ -97,14 +94,6 @@ public class UserClientRequestDTO {
 
     public void setSituation(UserSituation situation) {
         this.situation = situation;
-    }
-
-    public CityDTO getCity() {
-        return city;
-    }
-
-    public void setCity(CityDTO city) {
-        this.city = city;
     }
 
 }

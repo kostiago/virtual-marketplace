@@ -24,7 +24,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -47,8 +47,14 @@ public class User implements UserDetails {
     private String email;
 
     private String password;
-    private String address;
+
     private String cep;
+
+    private String logradouro;
+    private String complemento;
+    private String bairro;
+    private String localidade;
+    private String uf;
 
     private String passwordRecoveryCode;
 
@@ -64,10 +70,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserSituation situation;
 
-    @ManyToOne
-    @JoinColumn(name = "city_id")
-    private City city;
-
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
@@ -78,9 +80,10 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String address, String cep, String cpf, Instant createDate, String email, Long id, String name,
-            String password, Instant updateDate, String passwordRecoveryCode, Date dateSendingCode) {
-        this.address = address;
+    public User(String cep, String cpf, Instant createDate, String email, Long id, String name,
+            String password, Instant updateDate, String passwordRecoveryCode, Date dateSendingCode, String logradouro,
+            String complemento, String bairro, String localidade, String uf) {
+
         this.cep = cep;
         this.cpf = cpf;
         this.createDate = createDate;
@@ -91,6 +94,12 @@ public class User implements UserDetails {
         this.updateDate = updateDate;
         this.passwordRecoveryCode = passwordRecoveryCode;
         this.dateSendingCode = dateSendingCode;
+
+        this.logradouro = logradouro;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.localidade = localidade;
+        this.uf = uf;
 
     }
 
@@ -145,14 +154,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getCep() {
         return cep;
     }
@@ -177,12 +178,44 @@ public class User implements UserDetails {
         this.updateDate = updateDate;
     }
 
-    public City getCity() {
-        return city;
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getLocalidade() {
+        return localidade;
+    }
+
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
     }
 
     public Set<Permission> getPermissions() {

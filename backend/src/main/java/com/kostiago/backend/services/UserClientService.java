@@ -13,11 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kostiago.backend.dto.UserClientRequestDTO;
 import com.kostiago.backend.dto.UserDTO;
 
-import com.kostiago.backend.entities.City;
 import com.kostiago.backend.entities.Permission;
 import com.kostiago.backend.entities.User;
 import com.kostiago.backend.entities.enums.UserSituation;
-import com.kostiago.backend.repositories.CityRepository;
+
 import com.kostiago.backend.repositories.PermissionRepository;
 import com.kostiago.backend.repositories.UserRepository;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
@@ -37,9 +36,6 @@ public class UserClientService {
     @Autowired
     private PermissionRepository permissionRepository;
 
-    @Autowired
-    private CityRepository cityRepository;
-
     @Transactional
     public UserDTO signup(UserClientRequestDTO dto) {
 
@@ -54,12 +50,6 @@ public class UserClientService {
 
         entity.getPermissions().add(clientPermission);
         entity.setId(null);
-
-        // Verifica se o DTO tem um cidade
-        City city = cityRepository.findById(dto.getCity().getId())
-                .orElseThrow(() -> new ResourceNotFoundExeception("Cidade  não encontrada"));
-
-        entity.setCity(city);
 
         repository.saveAndFlush(entity);
 
@@ -99,7 +89,6 @@ public class UserClientService {
         entity.setName(dto.getName());
         entity.setCpf(dto.getCpf());
         entity.setEmail(dto.getEmail());
-        entity.setAddress(dto.getAddress());
         entity.setCep(dto.getCep());
 
     }
