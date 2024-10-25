@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -47,6 +48,9 @@ public class UserService {
     @Autowired
     private PermissionRepository permissionRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     @Transactional(readOnly = true)
     public Page<UserDTO> findAllPaged(Integer page, Integer size) {
 
@@ -73,8 +77,17 @@ public class UserService {
         User entity = new User();
         copyDtoToEntity(dto, entity);
 
-        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+        String randomPassword = getPasswordRecoveryCode(entity.getId());
+
+        entity.setPassword(passwordEncoder.encode(randomPassword));
+
         repository.saveAndFlush(entity);
+
+        emailService.sendEmailText(
+                entity.getEmail(),
+                "Senha de Acesso",
+                "Olá, " + entity.getName() + "! Sua senha de acesso é: " + randomPassword +
+                        "\nRecomendamos que você altere essa senha após o primeiro login.");
 
         return new UserDTO(entity);
 
@@ -134,9 +147,6 @@ public class UserService {
         }
     }
 
-    /**
-     * METODO AUXILIAR
-     */
     private void copyDtoToEntity(UserDTO dto, User entity) {
         entity.setName(dto.getName());
         entity.setCpf(dto.getCpf());
@@ -160,5 +170,9 @@ public class UserService {
             Permission permission = permissionRepository.getReferenceById(permissionDTO.getId());
             entity.getPermissions().add(permission);
         }
+    }
+
+    public String getPasswordRecoveryCode(Long id) {
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 }

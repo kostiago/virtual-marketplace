@@ -61,6 +61,7 @@ public class UserClientService {
         entity.setId(null);
 
         repository.saveAndFlush(entity);
+        System.out.println("Usuário salvo no repositório");
 
         // Envia o e-mail de confirmação
         sendSignupConfirmationEmail(entity);
@@ -156,6 +157,8 @@ public class UserClientService {
         emailService.sendEmailText(entity.getEmail(), "Cadastro na loja Cubos", "Olá, '" + entity.getName()
                 + "' seu cadastro na loja Cubos foi realizado com sucesso. Em breve você receberá a senha de acesso por e-mail!!"
                 + entity.getPasswordRecoveryCode());
+
+        System.err.println("Email enviado");
     }
 
 }
