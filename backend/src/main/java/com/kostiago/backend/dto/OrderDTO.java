@@ -19,7 +19,7 @@ public class OrderDTO {
     private ClientDTO client;
     private PaymentDTO payment;
 
-    @NotEmpty(message = "É necessario ter pelo menos um item associad!")
+    @NotEmpty(message = "É necessario ter pelo menos um item associado!")
     private List<OrderItemDTO> items = new ArrayList<>();
 
     public OrderDTO() {

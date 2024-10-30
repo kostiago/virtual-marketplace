@@ -84,22 +84,15 @@ INSERT INTO tb_product_category (product_id, category_id) VALUES (10, 1); -- HP 
 
 
 -- Inserindo Pessoas na tabela tb_person
-INSERT INTO tb_user (name, cpf, email, password, address, cep, logradouro, complemento, bairro, localidade, uf, create_date, update_date, city_id) VALUES ('Tiago Costa', '123.456.789-00', 'csostatiago055@gmail.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', 'Rua das Flores, 123', '12345-678', NOW(), NOW(), 1);
+INSERT INTO tb_user (name, cpf, email, password, cep, logradouro, complemento, bairro, localidade, uf, password_recovery_code, date_sending_code, create_date, update_date, situation) VALUES ('Tiago Costa', '119.456.789-00', 'tiago_pb-@hotmail.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', '58840000', '', '', '', 'Pombal', 'PB', NULL, NULL, '2024-10-30T12:32:05.022335300Z', '2024-10-30T12:32:05.022335300Z', 'PENDENTE');
 
-INSERT INTO tb_user (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Maria Oliveira', '987.654.321-00', 'maria.oliveira@email.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', 'Av. Paulista, 456', '98765-432', NOW(), NOW(), 2);
-
-INSERT INTO tb_user (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Carlos Souza', '111.222.333-44', 'carlos.souza@email.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', 'Rua da Praia, 789', '12345-987', NOW(), NOW(), 3);
-
-INSERT INTO tb_user (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Ana Costa', '555.666.777-88', 'ana.costa@email.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', 'Rua Central, 101', '67890-123', NOW(), NOW(), 4);
-
-INSERT INTO tb_user (name, cpf, email, password, address, cep, create_date, update_date, city_id) VALUES ('Paulo Mendes', '999.888.777-66', 'paulo.mendes@email.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', 'Rua dos Pinheiros, 202', '54321-098', NOW(), NOW(), 5);
-
+INSERT INTO tb_user (name, cpf, email, password, cep, logradouro, complemento, bairro, localidade, uf, password_recovery_code, date_sending_code, create_date, update_date, situation) VALUES ('Edna poline', '109.456.789-00', 'edna_mail@mail.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', '58840000', '', '', '', 'Pombal', 'PB', NULL, NULL, '2024-10-30T12:32:05.022335300Z', '2024-10-30T12:32:05.022335300Z', 'PENDENTE');
 -- Inserindo Pedido na tabela tb_order
 INSERT INTO tb_order(moment, status, client_id) VALUES (NOW(), 1,1);
 
-INSERT INTO tb_order(moment, status, client_id) VALUES (NOW(), 3,2);
+INSERT INTO tb_order(moment, status, client_id) VALUES (NOW(), 3,1);
 
-INSERT INTO tb_order(moment, status, client_id) VALUES (NOW(), 0,1);
+INSERT INTO tb_order(moment, status, client_id) VALUES (NOW(), 0,2);
 
 -- Inserindo Item do Pedido na tabela tb_order_item
 INSERT INTO tb_order_item(order_id, product_id, quantity, price) VALUES (1, 1, 2, 90.5);
@@ -114,11 +107,4 @@ INSERT INTO tb_permission (name, create_date, update_date) VALUES ('ROLE_ADMIN',
 
 -- -- Inserindo Permissões para as Person na tabela tb_person_permission
 INSERT INTO tb_person_permission (person_id, permission_id) VALUES (1, 1), (1, 2);
-
-INSERT INTO tb_person_permission (person_id, permission_id) VALUES (2, 1);
-
-INSERT INTO tb_person_permission (person_id, permission_id) VALUES (3, 1), (3, 2);
-
-INSERT INTO tb_person_permission (person_id, permission_id) VALUES (4, 1), (4, 3);
-
-INSERT INTO tb_person_permission (person_id, permission_id) VALUES (5, 1);
+INSERT INTO tb_person_permission (person_id, permission_id) VALUES (2, 3);

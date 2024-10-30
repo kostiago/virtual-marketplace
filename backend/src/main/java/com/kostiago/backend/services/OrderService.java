@@ -33,10 +33,14 @@ public class OrderService {
     @Autowired
     private UserDetailService service;
 
+    @Autowired
+    private UserSecurityService userSecurityService;
+
     @Transactional(readOnly = true)
     public OrderDTO findById(Long id) {
         Order order = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundExeception("Pedido não encontrado!"));
+        userSecurityService.validateSelfOrAdmin(order.getClient().getId());
         return new OrderDTO(order);
     }
 

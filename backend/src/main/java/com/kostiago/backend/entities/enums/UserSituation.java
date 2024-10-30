@@ -37,20 +37,13 @@ public enum UserSituation {
     @JsonCreator
     public static UserSituation doValue(String code) {
 
-        if (code.equals("A")) {
-            return ATIVO;
-        } else if (code.equals("I")) {
-            return INATIVO;
+        for (UserSituation situation : UserSituation.values()) {
+            if (situation.getCode().equals(code)) {
+                return situation;
+            }
         }
 
-        else if (code.equals("P")) {
-            return PENDENTE;
-        }
-
-        else {
-            return null;
-        }
-
+        return null;
     }
 
 }

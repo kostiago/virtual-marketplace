@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.kostiago.backend.services.exceptions.AlreadyRegisteredException;
 import com.kostiago.backend.services.exceptions.DatabaseException;
+import com.kostiago.backend.services.exceptions.ForbiddenException;
 import com.kostiago.backend.services.exceptions.InvalidAcronymException;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
 
@@ -98,6 +99,22 @@ public class ControllerExceptionHandler {
         for (FieldError f : e.getBindingResult().getFieldErrors()) {
             error.addError(f.getField(), f.getDefaultMessage());
         }
+        return ResponseEntity.status(status).body(error);
+
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ValidationError> forbidden(ForbiddenException e,
+            HttpServletRequest request) {
+
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        ValidationError error = new ValidationError();
+
+        error.setTimeStamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Validation Exception");
+        error.setMessage(e.getMessage());
+        error.setPath(request.getRequestURI());
         return ResponseEntity.status(status).body(error);
 
     }

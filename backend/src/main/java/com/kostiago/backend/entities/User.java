@@ -264,6 +264,10 @@ public class User implements UserDetails {
         return false;
     }
 
+    public boolean hasSituation(UserSituation situation) {
+        return this.situation == situation;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
