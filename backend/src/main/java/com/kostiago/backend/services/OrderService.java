@@ -41,6 +41,7 @@ public class OrderService {
         Order order = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundExeception("Pedido não encontrado!"));
         userSecurityService.validateSelfOrAdmin(order.getClient().getId());
+        userSecurityService.isUserPending();
         return new OrderDTO(order);
     }
 

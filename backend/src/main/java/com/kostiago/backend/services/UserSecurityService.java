@@ -23,10 +23,10 @@ public class UserSecurityService {
         }
     }
 
-    public void isUserPending(long userId) {
+    public void isUserPending() {
         User me = service.authenticated();
-        if (!me.hasSituation(UserSituation.ATIVO)
-                || (!me.hasPermission("ROLE_ADMIN") && !me.getId().equals(userId))) {
+
+        if (!me.hasSituation(UserSituation.ATIVO)) {
             throw new ForbiddenException("Access denied, active your account");
         }
     }

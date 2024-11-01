@@ -86,11 +86,14 @@ INSERT INTO tb_product_category (product_id, category_id) VALUES (10, 1); -- HP 
 -- Inserindo Pessoas na tabela tb_person
 INSERT INTO tb_user (name, cpf, email, password, cep, logradouro, complemento, bairro, localidade, uf, password_recovery_code, date_sending_code, create_date, update_date, situation) VALUES ('Tiago Costa', '119.456.789-00', 'tiago_pb-@hotmail.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', '58840000', '', '', '', 'Pombal', 'PB', NULL, NULL, '2024-10-30T12:32:05.022335300Z', '2024-10-30T12:32:05.022335300Z', 'PENDENTE');
 
-INSERT INTO tb_user (name, cpf, email, password, cep, logradouro, complemento, bairro, localidade, uf, password_recovery_code, date_sending_code, create_date, update_date, situation) VALUES ('Edna poline', '109.456.789-00', 'edna_mail@mail.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', '58840000', '', '', '', 'Pombal', 'PB', NULL, NULL, '2024-10-30T12:32:05.022335300Z', '2024-10-30T12:32:05.022335300Z', 'PENDENTE');
+INSERT INTO tb_user (name, cpf, email, password, cep, logradouro, complemento, bairro, localidade, uf, password_recovery_code, date_sending_code, create_date, update_date, situation) VALUES ('Edna poline', '109.456.789-00', 'edna_mail@mail.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', '58840000', '', '', '', 'Pombal', 'PB', NULL, NULL, '2024-10-30T12:32:05.022335300Z', '2024-10-30T12:32:05.022335300Z', 'ATIVO');
+
+INSERT INTO tb_user (name, cpf, email, password, cep, logradouro, complemento, bairro, localidade, uf, password_recovery_code, date_sending_code, create_date, update_date, situation) VALUES ('Pedro Carlos', '125.456.789-00', 'pedropedro@mail.com', '$2a$10$qKQsYQCzOoLDNAnKpRrcu.nhu6ixbt0sbPoF99Ati8hR2rW143A02', '58840000', '', '', '', 'Pombal', 'PB', NULL, NULL, '2024-10-30T12:32:05.022335300Z', '2024-10-30T12:32:05.022335300Z', 'ATIVO');
+
 -- Inserindo Pedido na tabela tb_order
 INSERT INTO tb_order(moment, status, client_id) VALUES (NOW(), 1,1);
 
-INSERT INTO tb_order(moment, status, client_id) VALUES (NOW(), 3,1);
+INSERT INTO tb_order(moment, status, client_id) VALUES (NOW(), 3,3);
 
 INSERT INTO tb_order(moment, status, client_id) VALUES (NOW(), 0,2);
 
@@ -107,4 +110,7 @@ INSERT INTO tb_permission (name, create_date, update_date) VALUES ('ROLE_ADMIN',
 
 -- -- Inserindo Permissões para as Person na tabela tb_person_permission
 INSERT INTO tb_person_permission (person_id, permission_id) VALUES (1, 1), (1, 2);
+
 INSERT INTO tb_person_permission (person_id, permission_id) VALUES (2, 3);
+
+INSERT INTO tb_person_permission (person_id, permission_id) VALUES (3, 1);
