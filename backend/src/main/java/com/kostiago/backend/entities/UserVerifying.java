@@ -36,6 +36,10 @@ public class UserVerifying {
         this.user = user;
     }
 
+    public UserVerifying(User user) {
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,6 +1,9 @@
 package com.kostiago.backend.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,18 @@ public class UserManagementController {
     @Autowired
     private UserManagementService service;
 
+    @PostMapping("/authenticating-user")
+    public String authenticatingUser(@RequestBody UserVerifying request) {
+        return service.verifyUserCode(request.getUuid());
+    }
+
+    @PostMapping("/resend-verification-code")
+    public ResponseEntity<String> resendVerificationCode(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        service.resendVerificationCode(email);
+        return ResponseEntity.ok().body(null);
+    }
+
     @PostMapping("/request-code")
     public String requestCode(@Valid @RequestBody User dto) {
         return service.requestCode(dto.getEmail());
@@ -28,11 +43,6 @@ public class UserManagementController {
     @PostMapping("/change-password")
     public String changePassword(@Valid @RequestBody UserPasswordRecoveryDTO dto) {
         return service.changePassword(dto);
-    }
-
-    @PostMapping("/authenticating-user")
-    public String authenticatingUser(@RequestBody UserVerifying request) {
-        return service.verifyUserCode(request.getUuid());
     }
 
 }
