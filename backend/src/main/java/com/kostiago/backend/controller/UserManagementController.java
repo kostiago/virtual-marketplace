@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kostiago.backend.dto.UserPasswordRecoveryDTO;
 import com.kostiago.backend.entities.User;
+import com.kostiago.backend.entities.UserVerifying;
 import com.kostiago.backend.services.UserManagementService;
 
 import jakarta.validation.Valid;
@@ -28,6 +28,11 @@ public class UserManagementController {
     @PostMapping("/change-password")
     public String changePassword(@Valid @RequestBody UserPasswordRecoveryDTO dto) {
         return service.changePassword(dto);
+    }
+
+    @PostMapping("/authenticating-user")
+    public String authenticatingUser(@RequestBody UserVerifying request) {
+        return service.verifyUserCode(request.getUuid());
     }
 
 }

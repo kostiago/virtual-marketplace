@@ -5,7 +5,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.time.Instant;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,11 +21,13 @@ import com.kostiago.backend.dto.UserDTO;
 import com.kostiago.backend.dto.UserInsertDTO;
 import com.kostiago.backend.entities.Permission;
 import com.kostiago.backend.entities.User;
+import com.kostiago.backend.entities.UserVerifying;
 import com.kostiago.backend.entities.ViaCepResponse;
 import com.kostiago.backend.entities.enums.UserSituation;
 
 import com.kostiago.backend.repositories.PermissionRepository;
 import com.kostiago.backend.repositories.UserRepository;
+import com.kostiago.backend.repositories.UserVerifyindRepository;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
 import com.nimbusds.jose.shaded.gson.Gson;
 
@@ -38,6 +42,9 @@ public class UserClientService {
 
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private UserVerifyindRepository userVerifyindRepository;
 
     @Autowired
     private PermissionRepository permissionRepository;
@@ -56,15 +63,21 @@ public class UserClientService {
 
         // Atribui a permissão padrão 'ROLE_USER
         entity.getPermissions().add(findClientPermission());
-
         // Garante que o ID seja nulo para novo cadastro
         entity.setId(null);
 
         repository.saveAndFlush(entity);
         System.out.println("Usuário salvo no repositório");
 
+        // Criando codigo de verificação
+        UserVerifying verifying = new UserVerifying();
+        verifying.setUser(entity);
+        verifying.setUuid(getUserVerifyingCode(verifying.getId()));
+        verifying.setCodeExpirationDate(Instant.now().plusMillis(900000));
+        userVerifyindRepository.saveAndFlush(verifying);
+
         // Envia o e-mail de confirmação
-        sendSignupConfirmationEmail(entity);
+        sendSignupConfirmationEmail(entity, verifying);
 
         return new UserDTO(entity);
     }
@@ -152,13 +165,17 @@ public class UserClientService {
     }
 
     // Método privado para enviar e-mail de confirmação
-    private void sendSignupConfirmationEmail(User entity) {
+    private void sendSignupConfirmationEmail(User entity, UserVerifying verifying) {
 
         emailService.sendEmailText(entity.getEmail(), "Cadastro na loja Cubos", "Olá, '" + entity.getName()
-                + "' seu cadastro na loja Cubos foi realizado com sucesso. Em breve você receberá a senha de acesso por e-mail!!"
-                + entity.getPasswordRecoveryCode());
+                + "' seu cadastro na loja Cubos foi realizado com sucesso. Ative sua conta agora!!"
+                + verifying.getUuid());
 
         System.err.println("Email enviado");
+    }
+
+    private String getUserVerifyingCode(Long id) {
+        return UUID.randomUUID().toString().substring(0, 6).toUpperCase();
     }
 
 }
