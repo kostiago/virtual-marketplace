@@ -17,6 +17,10 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_product")
@@ -27,14 +31,24 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(min = 3, max = 80, message = "O nome precisa ter entre 3 a 80 caracteres!")
+    @NotBlank(message = "Campo requerido!")
     private String name;
 
+    @Size(min = 10, max = 80, message = "A descrição precisa ter no minimo 10 caracteres!")
+    @NotBlank(message = "Campo requerido!")
     @Column(columnDefinition = "TEXT")
     private String shortDescription;
 
+    @Size(min = 10, message = "A descrição precisa ter no minimo 10 caracteres!")
+    @NotBlank(message = "Campo requerido!")
     @Column(columnDefinition = "TEXT")
     private String description;
+
+    @NotNull(message = "Campo requerido!")
+    @Positive(message = "O preço deve ser maior que zero!")
     private Double price;
+
     private Double sale;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE", updatable = false)

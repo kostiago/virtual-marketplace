@@ -93,7 +93,7 @@ public class ControllerExceptionHandler {
         error.setTimeStamp(Instant.now());
         error.setStatus(status.value());
         error.setError("Validation Exception");
-        error.setMessage(e.getMessage());
+        error.setMessage("Dados Inválidos");
         error.setPath(request.getRequestURI());
 
         for (FieldError f : e.getBindingResult().getFieldErrors()) {
