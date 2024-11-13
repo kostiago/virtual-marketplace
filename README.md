@@ -15,4 +15,4 @@ Desenvolver um sistema de mercado virtual utilizando Spring boot para o *back-en
 [![Git](https://img.shields.io/badge/Git-000?style=for-the-badge&logo=git&logoColor=E94D5F)](https://git-scm.com/doc) 
 
 ## Diagrama de Entidade
-<img src="https://github.com/kostiago/virtual-marketplace/blob/f7e6f266e85048053e82526e2342b616ba62ff90/sources/diagrama.png">
+<img src="https://github.com/kostiago/virtual-marketplace/blob/0f3cc3225a1b982fc634a843ae02aedc35783eab/sources/diagrama.png">
