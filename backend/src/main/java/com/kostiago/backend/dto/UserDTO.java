@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.kostiago.backend.entities.Store;
 import com.kostiago.backend.entities.User;
+import com.kostiago.backend.entities.enums.OperatorType;
 import com.kostiago.backend.entities.enums.UserSituation;
 
 import jakarta.validation.constraints.Email;
@@ -42,7 +44,11 @@ public class UserDTO implements Serializable {
 
     private UserSituation situation;
 
+    private OperatorType operatorType;
+
     private List<PermissionDTO> permissions = new ArrayList<>();
+
+    private Store store;
 
     public UserDTO() {
     }
@@ -79,7 +85,9 @@ public class UserDTO implements Serializable {
         this.updateDate = entity.getUpdateDate();
         this.dateSendingCode = entity.getDateSendingCode();
         this.passwordRecoveryCode = entity.getPasswordRecoveryCode();
+
         this.situation = entity.getSituation();
+        this.operatorType = entity.getOperatorType();
 
         this.logradouro = entity.getLogradouro();
         this.complemento = entity.getComplemento();
@@ -214,6 +222,14 @@ public class UserDTO implements Serializable {
 
     public void setSituation(UserSituation situation) {
         this.situation = situation;
+    }
+
+    public OperatorType getOperatorType() {
+        return operatorType;
+    }
+
+    public void setOperatorType(OperatorType operatorType) {
+        this.operatorType = operatorType;
     }
 
 }

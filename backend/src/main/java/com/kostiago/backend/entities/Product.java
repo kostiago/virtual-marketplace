@@ -58,6 +58,10 @@ public class Product implements Serializable {
     private Instant updateDate = Instant.now();
 
     @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
+
+    @ManyToOne
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
@@ -149,6 +153,14 @@ public class Product implements Serializable {
 
     public void setUpdateDate(Instant updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 
     public Brand getBrand() {

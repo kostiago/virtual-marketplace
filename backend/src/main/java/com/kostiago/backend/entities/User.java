@@ -12,8 +12,10 @@ import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.kostiago.backend.entities.enums.OperatorType;
 import com.kostiago.backend.entities.enums.UserSituation;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -26,9 +28,11 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_user")
@@ -51,6 +55,8 @@ public class User implements UserDetails {
     private String cep;
 
     private String logradouro;
+
+    @NotNull(message = "Campo requerido!")
     private String complemento;
     private String bairro;
     private String localidade;
@@ -70,12 +76,18 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserSituation situation;
 
+    @Enumerated(EnumType.STRING)
+    private OperatorType operatorType;
+
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "tb_person_permission", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private Set<Permission> permissions = new HashSet<>();
+
+    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL)
+    private Store store;
 
     public User() {
     }
@@ -248,6 +260,22 @@ public class User implements UserDetails {
 
     public void setSituation(UserSituation situation) {
         this.situation = situation;
+    }
+
+    public OperatorType getOperatorType() {
+        return operatorType;
+    }
+
+    public void setOperatorType(OperatorType operatorType) {
+        this.operatorType = operatorType;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 
     public void addPermission(Permission permission) {

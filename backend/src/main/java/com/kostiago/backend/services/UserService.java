@@ -28,7 +28,8 @@ import com.kostiago.backend.dto.UserUpdateDTO;
 import com.kostiago.backend.entities.Permission;
 import com.kostiago.backend.entities.User;
 import com.kostiago.backend.entities.ViaCepResponse;
-
+import com.kostiago.backend.entities.enums.OperatorType;
+import com.kostiago.backend.entities.enums.UserSituation;
 import com.kostiago.backend.repositories.PermissionRepository;
 import com.kostiago.backend.repositories.UserRepository;
 import com.kostiago.backend.services.exceptions.ResourceNotFoundExeception;
@@ -77,9 +78,13 @@ public class UserService {
         User entity = new User();
         copyDtoToEntity(dto, entity);
 
-        String randomPassword = getPasswordRecoveryCode(entity.getId());
+        String randomPassword = getRandomPassword(entity.getId());
 
         entity.setPassword(passwordEncoder.encode(randomPassword));
+        entity.getPermissions().add(findOperatorPermission());
+
+        entity.setOperatorType(OperatorType.ADMIN);
+        entity.setSituation(UserSituation.PENDENTE);
 
         repository.saveAndFlush(entity);
 
@@ -159,7 +164,8 @@ public class UserService {
 
         ViaCepResponse viaCepResponse = getAdressFromViaCep(entity.getCep());
 
-        entity.setLogradouro(viaCepResponse.getLogradouro());
+        entity.setLogradouro(
+                viaCepResponse.getLogradouro().isEmpty() ? dto.getLogradouro() : viaCepResponse.getLogradouro());
         entity.setBairro(viaCepResponse.getBairro());
         entity.setLocalidade(viaCepResponse.getLocalidade());
         entity.setUf(viaCepResponse.getUf());
@@ -172,7 +178,14 @@ public class UserService {
         }
     }
 
-    public String getPasswordRecoveryCode(Long id) {
+    // Método para buscar a permissão de Operador ADMIN
+    private Permission findOperatorPermission() {
+        return permissionRepository.findByName("ROLE_OPERATOR")
+                .orElseThrow(() -> new ResourceNotFoundExeception("Permissão 'ROLE_OPERATOR' não encontrada"));
+
+    }
+
+    public String getRandomPassword(Long id) {
         return UUID.randomUUID().toString().substring(0, 8);
     }
 }
